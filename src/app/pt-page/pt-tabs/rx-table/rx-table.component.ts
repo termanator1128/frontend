@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {Rx} from "../rx";
+import {Component, OnInit} from '@angular/core'
+import {Rx} from '../../../models/Rx'
 
 @Component({
   selector: 'app-rx-table',

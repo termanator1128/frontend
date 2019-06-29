@@ -47,11 +47,15 @@
 
   <p-footer>
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
-      <div *ngIf="type==='edit'">
-        <button (click)="delete()" class="ui-button-danger" label="Delete" pButton type="button"></button>
+      <div class="form-controls">
+        <div>
+          <button (click)="hide()" class="ui-button-secondary" label="Cancel" pButton type="button"></button>
+          <button (click)="save()" label="Save" pButton type="button"></button>
+        </div>
+        <div *ngIf="type==='edit'">
+          <button (click)="delete()" class="ui-button-danger" label="Delete" pButton type="button"></button>
+        </div>
       </div>
-      <button (click)="hide()" class="ui-button-secondary" label="Cancel" pButton type="button"></button>
-      <button (click)="save()" label="Save" pButton type="button"></button>
     </div>
   </p-footer>
 </p-dialog>

@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
-import {Rx} from "../rx";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core'
+import {Rx} from '../../../models/Rx'
+import {FormBuilder, FormGroup} from '@angular/forms'
 
 @Component({
   selector: 'app-rx-form',
@@ -21,7 +21,7 @@ export class RxFormComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    //console.log('here')
+    // console.log('here')
   }
 
   ngOnChanges(): void {
@@ -47,7 +47,7 @@ export class RxFormComponent implements OnInit, OnChanges {
   save() {
     const rx: Rx = {
       date: this.form.controls.date.value,
-      drug: this.form.controls.this.drug.value,
+      drug: this.form.controls.drug.value,
       dosage: this.form.controls.dosage.value,
       reason: this.form.controls.reason.value,
       prescriber: this.form.controls.prescriber.value

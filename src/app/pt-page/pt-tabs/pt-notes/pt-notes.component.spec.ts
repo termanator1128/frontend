@@ -1,6 +1,6 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing'
 
-import {PtNotesComponent} from './pt-notes.component';
+import {PtNotesComponent} from './pt-notes.component'
 
 describe('PtNotesComponent', () => {
   let component: PtNotesComponent;

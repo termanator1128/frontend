@@ -1,6 +1,6 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing'
 
-import {RxFormComponent} from './rx-form.component';
+import {RxFormComponent} from './rx-form.component'
 
 describe('RxFormComponent', () => {
   let component: RxFormComponent;

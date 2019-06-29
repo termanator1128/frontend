@@ -1,6 +1,6 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing'
 
-import {RxTableComponent} from './rx-table.component';
+import {RxTableComponent} from './rx-table.component'
 
 describe('RxTableComponent', () => {
   let component: RxTableComponent;
