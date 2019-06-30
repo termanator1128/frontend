@@ -1,2 +1,23 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<app-pt-page></app-pt-page>
+<div class="all-but-footer">
+  <app-main-search
+    (selectPatient)="patientSelect($event)"
+    [patients]="patients"
+  ></app-main-search>
+  <div class="content">
+    <div *ngIf="selectedPatient; else img">
+      <app-pt-page
+        [columns]="columns"
+        [patient]="selectedPatient"
+      ></app-pt-page>
+    </div>
+    <ng-template #img>
+      <div class="placeholder-div">
+        <img alt="here" class="placeholder" src="../../assets/star.png">
+      </div>
+    </ng-template>
+  </div>
+</div>
+<footer class="footer">
+  <a class="source-code" href="https://github.com/aleinin/bbrp-patient-portal">Source Code | Created By Aleinin</a>
+</footer>

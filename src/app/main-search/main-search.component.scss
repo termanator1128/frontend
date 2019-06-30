@@ -1,0 +1,18 @@
+.banner {
+  background-image: linear-gradient(#1368d8 1%, #0f51a9 100%);
+  display: flex;
+  justify-content: center;
+  padding-bottom: 20px;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  color: white;
+  font-family: Arial
+}
+
+.search {
+  border-radius: 15px;
+  padding: 10px;
+}

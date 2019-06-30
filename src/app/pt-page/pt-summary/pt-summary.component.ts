@@ -8,9 +8,12 @@ import {FormBuilder, FormGroup} from '@angular/forms'
   styleUrls: ['./pt-summary.component.scss']
 })
 export class PtSummaryComponent implements OnInit {
-  @Input() patient: PatientSummary
+  @Input() name: string
+  @Input() details: PatientSummary
+  @Input() columns
   display = false
   form: FormGroup
+  patient
 
   constructor(private formBuilder: FormBuilder) {
   }
@@ -37,23 +40,25 @@ export class PtSummaryComponent implements OnInit {
     this.display = false
   }
 
-  save() {
-    console.log(this.form)
+  edit(patient) {
+    console.log(patient)
+    this.hide()
   }
 
-  delete() {
-    console.log(this.form)
+  delete(patient) {
+    console.log(patient)
+    this.hide()
   }
 
   ngOnInit() {
-    this.form = this.formBuilder.group({
-      name: this.patient.name,
-      sex: this.patient.sex,
-      pronouns: this.patient.pronouns,
-      dob: this.patient.dob,
-      address: this.patient.address,
-      age: this.patient.age
-    })
+    this.patient = {
+      name: this.name,
+      sex: this.details.sex,
+      pronouns: this.details.pronouns,
+      dob: this.details.dob,
+      address: this.details.address,
+      age: this.details.age
+    }
   }
 
 }

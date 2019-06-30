@@ -1,0 +1,46 @@
+<p-card>
+  <h2 class="first">Patient Details</h2>
+  <p-tabView (onChange)="handleChange($event)" class="no-pad">
+    <p-tabPanel class="no-pad" header="Rx" leftIcon="pi pi-list">
+      <app-table
+        (deleteRow)="deleteRx($event)"
+        (editRow)="editRx($event)"
+        (saveRow)="saveRx($event)"
+        *ngIf="activeTab === 0"
+        [cols]="columns.rx"
+        [rows]="patient.scripts"
+        addLabel="Prescribe"
+        tableLabel="Prescriptions"
+      ></app-table>
+    </p-tabPanel>
+    <p-tabPanel header="Medical History" leftIcon="pi pi-user">
+      <app-table
+        (deleteRow)="deleteHist($event)"
+        (editRow)="editHist($event)"
+        (saveRow)="saveHist($event)"
+        *ngIf="activeTab === 1"
+        [cols]="columns.history"
+        [rows]="patient.history"
+        addLabel="Add Diagnosis"
+        tableLabel="Previous Diagnoses"
+      ></app-table>
+    </p-tabPanel>
+    <p-tabPanel header="Allergies" leftIcon="pi pi-eye">
+      <app-table
+        (deleteRow)="deleteAllergy($event)"
+        (editRow)="editAllergy($event)"
+        (saveRow)="saveAllergy($event)"
+        *ngIf="activeTab === 2"
+        [cols]="columns.allergy"
+        [rows]="patient.allergies"
+        addLabel="Add Allergy"
+        tableLabel="Allergies"
+      ></app-table>
+    </p-tabPanel>
+    <p-tabPanel header="Other Notes" leftIcon="pi pi-pencil">
+      <app-pt-notes
+        *ngIf="activeTab === 3"
+      ></app-pt-notes>
+    </p-tabPanel>
+  </p-tabView>
+</p-card>

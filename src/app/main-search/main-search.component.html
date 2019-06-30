@@ -1,0 +1,22 @@
+<!--<img src="../../assets/bbrp.png" alt="here" class="pt-pic">-->
+<div class="banner">
+
+  <div class="components">
+
+    <div class="top">
+
+      <h1 class="title">Patient Portal</h1>
+    </div>
+    <p-autoComplete
+      (completeMethod)="filterPatientSingle($event)"
+      (onSelect)="checkSelection()"
+      [(ngModel)]="input"
+      [minLength]="1"
+      [size]="100"
+      [suggestions]="filteredPatients"
+      class="search"
+      field="name"
+      placeholder="Enter a patient..."
+    ></p-autoComplete>
+  </div>
+</div>

@@ -13,4 +13,8 @@ export class PtNotesComponent implements OnInit {
   ngOnInit() {
   }
 
+  edit(e) {
+    console.log(e)
+    console.log(JSON.stringify(e))
+  }
 }

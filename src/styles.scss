@@ -2,3 +2,14 @@
 .ui-tabview-panels {
   padding: 0 !important;
 }
+
+body {
+  min-height: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  margin: 0;
+}
+
+html {
+  height: 100%;
+}
+

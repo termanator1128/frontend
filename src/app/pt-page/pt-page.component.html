@@ -1,7 +1,13 @@
-<p-card>
-  <p-card>
+<div>
+  <div class="pt-sum-comp">
     <app-pt-summary
-      [patient]="patient"
+      [columns]="columns.details"
+      [details]="patient.details"
+      [name]="patient.name"
     ></app-pt-summary>
-    <app-pt-tabs></app-pt-tabs>
-  </p-card>
+  </div>
+  <app-pt-tabs
+    [columns]="columns"
+    [patient]="patient"
+  ></app-pt-tabs>
+</div>

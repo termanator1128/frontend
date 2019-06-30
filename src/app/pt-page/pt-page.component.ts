@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core'
-import {PatientSummary} from '../models/patientsummary'
+import {Component, Input, OnInit} from '@angular/core'
+import {Patient} from '../models/Patient'
 
 @Component({
   selector: 'app-pt-page',
@@ -7,18 +7,9 @@ import {PatientSummary} from '../models/patientsummary'
   styleUrls: ['./pt-page.component.scss']
 })
 export class PtPageComponent implements OnInit {
-  patient: PatientSummary
-
+  @Input() patient: Patient
+  @Input() columns
   constructor() {
-    this.patient = {
-      name: 'Sophie Richmond',
-      age: 21,
-      sex: 'Female',
-      pronouns: 'Feminine',
-      dob: new Date('February 11, 1997'),
-      address: '2 Freedom Way',
-      pictureSrc: '../../../assets/noimg.jpg'
-    }
   }
 
   ngOnInit() {

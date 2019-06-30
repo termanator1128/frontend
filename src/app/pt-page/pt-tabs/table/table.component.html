@@ -1,11 +1,10 @@
-<p-table (onRowSelect)="onRowSelect($event)" [(selection)]="selectedDrug" [columns]="cols" [paginator]="true"
-         [rows]="15" [value]="drugs" selectionMode="single">
+<p-table (onRowSelect)="onRowSelect($event)" [(selection)]="selectedRow" [columns]="cols" [paginator]="true"
+         [rows]="15" [value]="rows" selectionMode="single">
   <ng-template pTemplate="caption">
-    List of Rx
+    {{tableLabel}}
   </ng-template>
   <ng-template let-columns pTemplate="header">
     <tr>
-
       <th *ngFor="let col of columns" [pSortableColumn]="col.field">
         {{col.header}}
         <p-sortIcon [field]="col.field"></p-sortIcon>
@@ -21,16 +20,19 @@
   </ng-template>
   <ng-template let-rowData pTemplate="summary">
     <div style="text-align:left">
-      <button (click)="showDialogToAdd()" label="Prescribe" pButton type="button"></button>
+      <button (click)="showDialogToAdd()" [label]="addLabel" pButton type="button"></button>
     </div>
   </ng-template>
 
 </p-table>
-<app-rx-form
-  [type]="type"
-  [display]="displayDialog"
-  [drug]="drug"
-  (onSave)="save($event)"
-  (onDelete)="delete($event)"
-  (onClose)="hideDialog()"
-></app-rx-form>
+<app-form
+  [new]="new"
+  [cols]="cols"
+  [display]="visible"
+  [row]="selectedRow"
+  [headerTitle]="'Rx Details'"
+  (addRow)="save($event)"
+  (editRow)="edit($event)"
+  (deleteRow)="delete($event)"
+  (closeDialog)="hideDialog()"
+></app-form>
