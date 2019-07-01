@@ -1,5 +1,5 @@
 export interface Rx {
-  date: Date,
+  date: string,
   drug: string,
   dosage: string,
   reason: string,

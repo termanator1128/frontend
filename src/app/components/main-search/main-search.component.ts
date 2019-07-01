@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core'
-import {Patient} from '../models/Patient'
+import {Patient} from '../../models/Patient'
 
 @Component({
   selector: 'app-main-search',
@@ -11,6 +11,7 @@ export class MainSearchComponent implements OnInit {
   input: any
   filteredPatients: any[]
   @Output() selectPatient: EventEmitter<any> = new EventEmitter()
+  @Output() createNew: EventEmitter<any> = new EventEmitter()
 
   constructor() {
   }
@@ -40,6 +41,10 @@ export class MainSearchComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  newPatient() {
+    this.createNew.emit()
   }
 
 }

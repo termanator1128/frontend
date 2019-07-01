@@ -1,5 +1,5 @@
 export interface MedicalHistory {
-  date: Date
+  date: string
   diagnosis: string
   diagnoser: string
 }

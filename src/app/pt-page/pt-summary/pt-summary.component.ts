@@ -18,20 +18,6 @@ export class PtSummaryComponent implements OnInit {
   constructor(private formBuilder: FormBuilder) {
   }
 
-  formatDate(date) {
-    const monthNames = [
-      'January', 'February', 'March',
-      'April', 'May', 'June', 'July',
-      'August', 'September', 'October',
-      'November', 'December'
-    ]
-    const day = date.getDate()
-    const monthIndex = date.getMonth()
-    const year = date.getFullYear()
-
-    return monthNames[monthIndex] + ' ' + day + ', ' + year
-  }
-
   show() {
     this.display = true
   }

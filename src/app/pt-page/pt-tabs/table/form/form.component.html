@@ -7,8 +7,34 @@
   showEffect="fade">
   <div *ngIf="row" class="ui-g ui-fluid">
     <form [formGroup]="form">
-      <div *ngFor="let col of cols">
-        <div class="ui-g-12">
+      <div *ngFor="let col of cols" [ngSwitch]="col.field">
+        <div *ngSwitchCase="'date'" class="ui-g-12">
+          <div class="ui-g-4">
+            {{col.header}}
+          </div>
+          <div class="ui-g-8">
+            <p-inputMask [formControlName]="col.field" mask="99/99/9999" slotChar="mm/dd/yyyy"
+                         styleClass="ui-inputtext"></p-inputMask>
+          </div>
+        </div>
+        <div *ngSwitchCase="'dob'" class="ui-g-12">
+          <div class="ui-g-4">
+            {{col.header}}
+          </div>
+          <div class="ui-g-8">
+            <p-inputMask [formControlName]="col.field" mask="99/99/9999" slotChar="mm/dd/yyyy"
+                         styleClass="ui-inputtext"></p-inputMask>
+          </div>
+        </div>
+        <div *ngSwitchCase="'age'" class="ui-g-12">
+          <div class="ui-g-4">
+            {{col.header}}
+          </div>
+          <div class="ui-g-8">
+            <input [formControlName]="col.field" pInputText pKeyFilter="int" placeholder="Age" type="text">
+          </div>
+        </div>
+        <div *ngSwitchDefault class="ui-g-12">
           <div class="ui-g-4">
             {{col.header}}
           </div>
