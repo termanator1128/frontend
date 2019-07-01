@@ -116,9 +116,9 @@ export class PortalState implements NgxsOnInit {
           sex: 'Female',
           pronouns: 'Feminine',
           dob: '06/30/2019',
-          address: '2 Freedom Way',
-          pictureSrc: '../../../assets/noimg.jpg'
-        }
+          address: '2 Freedom Way'
+        },
+        notes: '<p>hi</p>'
       },
       {
         name: 'Josh Parker',
@@ -164,9 +164,9 @@ export class PortalState implements NgxsOnInit {
           sex: 'Male',
           pronouns: 'Masculine',
           dob: '06/30/2019',
-          address: '2 Freedom Way',
-          pictureSrc: '../../../assets/noimg.jpg'
-        }
+          address: '2 Freedom Way'
+        },
+        notes: '<p>hello</p>'
       }
     ]
     ctx.patchState({
@@ -194,14 +194,22 @@ export class PortalState implements NgxsOnInit {
   @Action(RemovePatient)
   remove(ctx: StateContext<PortalStateModel>, {payload}: RemovePatient) {
     ctx.patchState({
-      patients: ctx.getState().patients.filter(a => a.name !== payload.name)
+      patients: ctx.getState().patients.filter(a => a.name !== payload.name),
+      state: 'landing',
+      selectedPatient: undefined
     })
   }
 
   @Action(UpdatePatient)
   update(ctx: StateContext<PortalStateModel>, {payload}: UpdatePatient) {
+    const patients = ctx.getState().patients
+    const index = patients.findIndex(patient => {
+      return patient.name === payload.name
+    })
+    patients[index] = payload
     ctx.patchState({
-      patients: ctx.getState().patients.filter(a => a.name !== payload.name)
+      patients,
+      selectedPatient: payload
     })
   }
 

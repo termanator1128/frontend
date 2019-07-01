@@ -37,6 +37,7 @@ export class FormComponent implements OnInit, OnChanges {
         }
       }
     }
+    console.log(this.form)
   }
 
   collectFormData() {

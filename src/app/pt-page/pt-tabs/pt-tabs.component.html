@@ -11,6 +11,7 @@
         [rows]="patient.scripts"
         addLabel="Prescribe"
         tableLabel="Prescriptions"
+        modalTitle="Edit Prescription"
       ></app-table>
     </p-tabPanel>
     <p-tabPanel header="Medical History" leftIcon="pi pi-user">
@@ -23,6 +24,7 @@
         [rows]="patient.history"
         addLabel="Add Diagnosis"
         tableLabel="Previous Diagnoses"
+        modalTitle="Edit Diagnosis"
       ></app-table>
     </p-tabPanel>
     <p-tabPanel header="Allergies" leftIcon="pi pi-eye">
@@ -35,11 +37,14 @@
         [rows]="patient.allergies"
         addLabel="Add Allergy"
         tableLabel="Allergies"
+        modalTitle="Edit Allergy"
       ></app-table>
     </p-tabPanel>
     <p-tabPanel header="Other Notes" leftIcon="pi pi-pencil">
       <app-pt-notes
         *ngIf="activeTab === 3"
+        (notesEdit)="saveNotes($event)"
+        [notes]="patient.notes"
       ></app-pt-notes>
     </p-tabPanel>
   </p-tabView>

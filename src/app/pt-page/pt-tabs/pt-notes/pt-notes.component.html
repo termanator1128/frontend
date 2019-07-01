@@ -1,4 +1,4 @@
-<quill-editor
-  (onContentChanged)="edit($event)"
-></quill-editor>
-
+<p-editor
+  (onTextChange)="edit()"
+  [(ngModel)]="notes"
+></p-editor>

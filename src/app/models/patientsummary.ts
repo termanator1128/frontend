@@ -4,5 +4,4 @@ export interface PatientSummary {
   pronouns: string
   dob: string,
   address: string
-  pictureSrc: string
 }

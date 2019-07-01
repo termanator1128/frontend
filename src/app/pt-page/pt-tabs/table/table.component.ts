@@ -10,6 +10,7 @@ export class TableComponent implements OnInit {
   @Input() cols: any[]
   @Input() tableLabel: string
   @Input() addLabel: string
+  @Input() modalTitle: string
   @Output() saveRow: EventEmitter<any> = new EventEmitter()
   @Output() editRow: EventEmitter<any> = new EventEmitter()
   @Output() deleteRow: EventEmitter<any> = new EventEmitter()
@@ -51,21 +52,17 @@ export class TableComponent implements OnInit {
   }
 
   delete(row) {
-    const index = this.rows.indexOf(this.selectedRow)
-    this.rows = this.rows.filter((val, i) => i !== index)
     this.deleteRow.emit(row)
     this.reset()
   }
 
   save(row) {
     this.saveRow.emit(row)
-    this.rows.push(row)
     this.reset()
   }
 
   edit(row) {
     this.editRow.emit(row)
-    this.rows.push(row)
     this.reset()
   }
 

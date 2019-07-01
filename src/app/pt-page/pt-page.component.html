@@ -4,6 +4,8 @@
       [columns]="columns.details"
       [details]="patient.details"
       [name]="patient.name"
+      (deletePatient)="deletePatient($event)"
+      (editDetails)="editDetails($event)"
     ></app-pt-summary>
   </div>
   <app-pt-tabs

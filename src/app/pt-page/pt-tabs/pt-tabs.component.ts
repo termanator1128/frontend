@@ -18,6 +18,10 @@ export class PtTabsComponent implements OnInit {
     this.activeTab = e.index
   }
 
+  saveNotes(notes) {
+
+  }
+
   saveRx(row) {
   }
 
@@ -46,11 +50,11 @@ export class PtTabsComponent implements OnInit {
   }
 
   editAllergy(row) {
+    console.log(row)
 
   }
 
   deleteAllergy(row) {
-
   }
 
   ngOnInit() {

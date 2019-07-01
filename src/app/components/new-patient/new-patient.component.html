@@ -1,0 +1,9 @@
+<app-form
+  (addRow)="saveNewPatient($event)"
+  (closeDialog)="hide()"
+  [cols]="cols"
+  [display]="true"
+  [headerTitle]="'New Patient'"
+  [new]="true"
+  [row]="{}"
+></app-form>

@@ -1,7 +1,7 @@
 <p-card [header]="name">
   <div class="pt-sum">
     <div>
-      <img [src]="details.pictureSrc" alt="here" class="pt-pic">
+      <img alt="here" class="pt-pic" src="../../../assets/noimg.jpg">
     </div>
     <div class="pt-info-and-edit">
       <div>
@@ -26,7 +26,7 @@
   [new]="false"
   [cols]="columns"
   [display]="display"
-  [row]="patient"
+  [row]="patientDetailsAndName"
   headerTitle="Patient Details"
   (editRow)="edit($event)"
   (deleteRow)="delete($event)"

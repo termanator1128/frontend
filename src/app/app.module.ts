@@ -12,6 +12,7 @@ import {
   AutoCompleteModule,
   CalendarModule,
   CardModule,
+  EditorModule,
   FieldsetModule,
   InputMaskModule,
   KeyFilterModule,
@@ -20,7 +21,6 @@ import {
 } from 'primeng/primeng'
 import {PtSummaryComponent} from './pt-page/pt-summary/pt-summary.component'
 import {PtNotesComponent} from './pt-page/pt-tabs/pt-notes/pt-notes.component'
-import {QuillModule} from 'ngx-quill'
 import {FormComponent} from './pt-page/pt-tabs/table/form/form.component'
 import {PtPageComponent} from './pt-page/pt-page.component'
 import {PtTabsComponent} from './pt-page/pt-tabs/pt-tabs.component'
@@ -29,6 +29,7 @@ import {TabMenuModule} from 'primeng/tabmenu'
 import {MainSearchComponent} from './components/main-search/main-search.component'
 import {NgxsModule} from '@ngxs/store'
 import {PortalState} from './state/portal.state'
+import {NewPatientComponent} from './components/new-patient/new-patient.component'
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import {PortalState} from './state/portal.state'
     PtTabsComponent,
     TableComponent,
     MainSearchComponent,
+    NewPatientComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,7 +54,6 @@ import {PortalState} from './state/portal.state'
     CalendarModule,
     CardModule,
     FieldsetModule,
-    QuillModule,
     ReactiveFormsModule,
     TabViewModule,
     TabMenuModule,
@@ -62,7 +63,8 @@ import {PortalState} from './state/portal.state'
     KeyFilterModule,
     NgxsModule.forRoot([
       PortalState
-    ])
+    ]),
+    EditorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

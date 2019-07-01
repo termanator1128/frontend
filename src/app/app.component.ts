@@ -3,7 +3,7 @@ import {Patient} from './models/Patient'
 import {Observable} from 'rxjs'
 import {PortalState} from './state/portal.state'
 import {Select, Store} from '@ngxs/store'
-import {SetSelectedPatient, SetState} from './state/portal.action'
+import {AddPatient, RemovePatient, SetSelectedPatient, SetState, UpdatePatient} from './state/portal.action'
 
 @Component({
   selector: 'app-root',
@@ -24,23 +24,23 @@ export class AppComponent {
     this.store.dispatch(new SetState('new'))
   }
 
-  patientSelect(patient) {
+  patientSelect(patient: Patient) {
     this.store.dispatch(new SetSelectedPatient(patient))
   }
 
-  saveNewPatient(patient) {
-    console.log(patient)
+  saveNewPatient(patient: Patient) {
+    this.store.dispatch(new AddPatient(patient))
     this.hide()
   }
 
-  updateExistingPatient(patient) {
+  updateExistingPatient(patient: Patient) {
     console.log(patient)
-    this.hide()
+    this.store.dispatch(new UpdatePatient(patient))
   }
 
-  deletePatient(patient) {
+  deletePatient(patient: Patient) {
     console.log(patient)
-    this.hide()
+    this.store.dispatch(new RemovePatient(patient))
   }
 
   hide() {

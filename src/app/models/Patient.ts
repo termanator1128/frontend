@@ -9,4 +9,5 @@ export interface Patient {
   scripts: Rx[]
   history: MedicalHistory[]
   allergies: Allergy[]
+  notes: string
 }
