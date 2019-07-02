@@ -18,25 +18,12 @@ export class PtPageComponent implements OnInit {
   ngOnInit() {
   }
 
-  editDetails(detailsAndName) {
-    if (this.patient.name === detailsAndName.name) {
-      delete detailsAndName.name
-      this.patient.details = detailsAndName
-      this.updatePatient.emit(this.patient)
-    } else {
-      const newPatient: Patient = JSON.parse(JSON.stringify(this.patient))
-      newPatient.name = detailsAndName.name
-      delete detailsAndName.name
-      newPatient.details = detailsAndName
-      this.deletePatient(this.patient)
-      this.addPatient.emit(newPatient)
-    }
+  editDetails(patient: Patient) {
+    this.updatePatient.emit(patient)
   }
 
-  deletePatient(detailsAndName) {
-    delete detailsAndName.name
-    this.patient.details = detailsAndName
-    this.removePatient.emit(this.patient)
+  deletePatient(patient) {
+    this.removePatient.emit(patient)
   }
 
 }

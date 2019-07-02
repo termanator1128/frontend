@@ -73,6 +73,7 @@ export class PortalState implements NgxsOnInit {
   ngxsOnInit(ctx: StateContext<PortalStateModel>) {
     const patients: Patient[] = [
       {
+        id: 0,
         name: 'Sophie Richmond',
         scripts: [
           {
@@ -121,6 +122,7 @@ export class PortalState implements NgxsOnInit {
         notes: '<p>hi</p>'
       },
       {
+        id: 1,
         name: 'Josh Parker',
         scripts: [
           {
@@ -194,7 +196,7 @@ export class PortalState implements NgxsOnInit {
   @Action(RemovePatient)
   remove(ctx: StateContext<PortalStateModel>, {payload}: RemovePatient) {
     ctx.patchState({
-      patients: ctx.getState().patients.filter(a => a.name !== payload.name),
+      patients: ctx.getState().patients.filter(a => a.id !== payload.id),
       state: 'landing',
       selectedPatient: undefined
     })
@@ -204,7 +206,7 @@ export class PortalState implements NgxsOnInit {
   update(ctx: StateContext<PortalStateModel>, {payload}: UpdatePatient) {
     const patients = ctx.getState().patients
     const index = patients.findIndex(patient => {
-      return patient.name === payload.name
+      return patient.id === payload.id
     })
     patients[index] = payload
     ctx.patchState({

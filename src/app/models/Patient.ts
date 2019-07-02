@@ -4,6 +4,7 @@ import {Allergy} from './Allergy'
 import {PatientSummary} from './patientsummary'
 
 export interface Patient {
+  id: number
   name: string
   details: PatientSummary
   scripts: Rx[]

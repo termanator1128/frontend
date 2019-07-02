@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core'
-import {PatientSummary} from '../../models/patientsummary'
 import {FormBuilder, FormGroup} from '@angular/forms'
 import {Patient} from '../../models/Patient'
 
@@ -9,10 +8,9 @@ import {Patient} from '../../models/Patient'
   styleUrls: ['./pt-summary.component.scss']
 })
 export class PtSummaryComponent implements OnChanges {
-  @Input() name: string
-  @Input() details: PatientSummary
+  @Input() patient: Patient
   @Input() columns
-  @Output() editDetails: EventEmitter<PatientSummary> = new EventEmitter()
+  @Output() editDetails: EventEmitter<Patient> = new EventEmitter()
   @Output() deletePatient: EventEmitter<Patient> = new EventEmitter()
   display = false
   form: FormGroup
@@ -30,23 +28,28 @@ export class PtSummaryComponent implements OnChanges {
   }
 
   edit(patientDetailsAndName) {
-    this.editDetails.emit(patientDetailsAndName)
+    const patient: Patient = JSON.parse(JSON.stringify(this.patient))
+    patient.name = patientDetailsAndName.name
+    delete patientDetailsAndName.name
+    patient.details = patientDetailsAndName
+    this.editDetails.emit(patient)
     this.hide()
   }
 
   delete(patientDetailsAndName) {
-    this.deletePatient.emit(patientDetailsAndName)
+    this.deletePatient.emit(this.patient)
     this.hide()
   }
 
   ngOnChanges() {
+    console.log(this.patient)
     this.patientDetailsAndName = {
-      name: this.name,
-      sex: this.details.sex,
-      pronouns: this.details.pronouns,
-      dob: this.details.dob,
-      address: this.details.address,
-      age: this.details.age
+      name: this.patient.name,
+      sex: this.patient.details.sex,
+      pronouns: this.patient.details.pronouns,
+      dob: this.patient.details.dob,
+      address: this.patient.details.address,
+      age: this.patient.details.age
     }
   }
 

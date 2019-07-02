@@ -1,4 +1,4 @@
-<p-card [header]="name">
+<p-card [header]="patient.name">
   <div class="pt-sum">
     <div>
       <img alt="here" class="pt-pic" src="../../../assets/noimg.jpg">
@@ -8,11 +8,11 @@
         <h3>Patient Summary</h3>
         <div>
           <ul class="pt-sum-info">
-            <li><b>Age:</b> {{details.age}}</li>
-            <li><b>Sex:</b> {{details.sex}}</li>
-            <li><b>Pronouns:</b> {{details.pronouns}}</li>
-            <li><b>DOB:</b> {{details.dob}}</li>
-            <li><b>Address:</b> {{details.address}}</li>
+            <li><b>Age:</b> {{patient.details.age}}</li>
+            <li><b>Sex:</b> {{patient.details.sex}}</li>
+            <li><b>Pronouns:</b> {{patient.details.pronouns}}</li>
+            <li><b>DOB:</b> {{patient.details.dob}}</li>
+            <li><b>Address:</b> {{patient.details.address}}</li>
           </ul>
         </div>
       </div>

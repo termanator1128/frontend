@@ -34,12 +34,10 @@ export class AppComponent {
   }
 
   updateExistingPatient(patient: Patient) {
-    console.log(patient)
     this.store.dispatch(new UpdatePatient(patient))
   }
 
   deletePatient(patient: Patient) {
-    console.log(patient)
     this.store.dispatch(new RemovePatient(patient))
   }
 

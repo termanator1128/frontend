@@ -2,8 +2,7 @@
   <div class="pt-sum-comp">
     <app-pt-summary
       [columns]="columns.details"
-      [details]="patient.details"
-      [name]="patient.name"
+      [patient]="patient"
       (deletePatient)="deletePatient($event)"
       (editDetails)="editDetails($event)"
     ></app-pt-summary>

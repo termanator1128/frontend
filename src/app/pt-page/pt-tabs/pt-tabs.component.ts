@@ -51,7 +51,6 @@ export class PtTabsComponent implements OnInit {
 
   editAllergy(row) {
     console.log(row)
-
   }
 
   deleteAllergy(row) {
