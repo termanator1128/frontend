@@ -1,4 +1,4 @@
-<p-card [header]="patient.name">
+<p-card [header]="info.name">
   <div class="pt-sum">
     <div>
       <img alt="here" class="pt-pic" src="../../../assets/noimg.jpg">
@@ -8,11 +8,11 @@
         <h3>Patient Summary</h3>
         <div>
           <ul class="pt-sum-info">
-            <li><b>Age:</b> {{patient.details.age}}</li>
-            <li><b>Sex:</b> {{patient.details.sex}}</li>
-            <li><b>Pronouns:</b> {{patient.details.pronouns}}</li>
-            <li><b>DOB:</b> {{patient.details.dob}}</li>
-            <li><b>Address:</b> {{patient.details.address}}</li>
+            <li><b>Age:</b> {{info.age}}</li>
+            <li><b>Sex:</b> {{info.sex}}</li>
+            <li><b>Pronouns:</b> {{info.pronouns}}</li>
+            <li><b>DOB:</b> {{info.dob}}</li>
+            <li><b>Address:</b> {{info.address}}</li>
           </ul>
         </div>
       </div>
@@ -26,9 +26,9 @@
   [new]="false"
   [cols]="columns"
   [display]="display"
-  [row]="patientDetailsAndName"
+  [row]="info"
   headerTitle="Patient Details"
   (editRow)="edit($event)"
-  (deleteRow)="delete($event)"
+  (deleteRow)="delete()"
   (closeDialog)="hide()"
 ></app-form>

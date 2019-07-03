@@ -1,4 +1,5 @@
-export interface PatientSummary {
+export interface PatientInfo {
+  name: string
   age: number
   sex: 'Male' | 'Female'
   pronouns: string

@@ -74,9 +74,9 @@ export class PortalState implements NgxsOnInit {
     const patients: Patient[] = [
       {
         id: 0,
-        name: 'Sophie Richmond',
         scripts: [
           {
+            id: 0,
             date: '06/30/2019',
             drug: 'Vicodin',
             dosage: '500mg',
@@ -84,6 +84,7 @@ export class PortalState implements NgxsOnInit {
             prescriber: 'Liam Salazar, M.D.'
           },
           {
+            id: 1,
             date: '06/30/2019',
             drug: 'Fentanyl',
             dosage: '100mcg',
@@ -91,6 +92,7 @@ export class PortalState implements NgxsOnInit {
             prescriber: 'Liam Salazar, M.D.'
           },
           {
+            id: 2,
             date: '06/30/2019',
             drug: 'Amoxicilyn',
             dosage: '500mg',
@@ -100,6 +102,7 @@ export class PortalState implements NgxsOnInit {
         ],
         history: [
           {
+            id: 0,
             date: '06/30/2019',
             diagnosis: 'Concussion',
             diagnoser: 'Liam Salazar, M.D.'
@@ -107,12 +110,14 @@ export class PortalState implements NgxsOnInit {
         ],
         allergies: [
           {
+            id: 1,
             allergy: 'Penicilin',
             reaction: 'hives',
             severity: 'Moderate'
           }
         ],
-        details: {
+        info: {
+          name: 'Sophie Richmond',
           age: 21,
           sex: 'Female',
           pronouns: 'Feminine',
@@ -123,9 +128,9 @@ export class PortalState implements NgxsOnInit {
       },
       {
         id: 1,
-        name: 'Josh Parker',
         scripts: [
           {
+            id: 10,
             date: '06/30/2019',
             drug: 'Vicodin',
             dosage: '500mg',
@@ -133,6 +138,7 @@ export class PortalState implements NgxsOnInit {
             prescriber: 'Liam Salazar, M.D.'
           },
           {
+            id: 11,
             date: '06/30/2019',
             drug: 'Fentanyl',
             dosage: '100mcg',
@@ -140,6 +146,7 @@ export class PortalState implements NgxsOnInit {
             prescriber: 'Liam Salazar, M.D.'
           },
           {
+            id: 12,
             date: '06/30/2019',
             drug: 'Amoxicilyn',
             dosage: '500mg',
@@ -149,6 +156,7 @@ export class PortalState implements NgxsOnInit {
         ],
         history: [
           {
+            id: 10,
             date: '06/30/2019',
             diagnosis: 'Concussion',
             diagnoser: 'Liam Salazar, M.D.'
@@ -156,12 +164,14 @@ export class PortalState implements NgxsOnInit {
         ],
         allergies: [
           {
+            id: 10,
             allergy: 'Penicilin',
             reaction: 'hives',
             severity: 'Moderate'
           }
         ],
-        details: {
+        info: {
+          name: 'Josh Parker',
           age: 30,
           sex: 'Male',
           pronouns: 'Masculine',

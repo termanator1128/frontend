@@ -19,7 +19,7 @@ export class NewPatientComponent {
     delete newPtDetailsAndName.name
     const newPatient: Patient = {
       name,
-      details: newPtDetailsAndName,
+      info: newPtDetailsAndName,
       notes: '',
       scripts: undefined,
       allergies: undefined,

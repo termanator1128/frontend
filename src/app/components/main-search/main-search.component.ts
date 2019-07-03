@@ -26,7 +26,7 @@ export class MainSearchComponent implements OnInit {
     const filtered: any[] = []
     for (let i = 0; i < patients.length; i++) {
       const patient = patients[i]
-      if (patient.name.toLowerCase().indexOf(query.toLowerCase()) === 0) {
+      if (patient.info.name.toLowerCase().indexOf(query.toLowerCase()) === 0) {
         filtered.push(patient)
       }
     }

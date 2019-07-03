@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core'
 import {Patient} from '../models/Patient'
+import {PatientInfo} from '../models/PatientInfo'
 
 @Component({
   selector: 'app-pt-page',
@@ -18,12 +19,13 @@ export class PtPageComponent implements OnInit {
   ngOnInit() {
   }
 
-  editDetails(patient: Patient) {
-    this.updatePatient.emit(patient)
+  editDetails(patientInfo: PatientInfo) {
+    this.patient.info = patientInfo
+    this.updatePatient.emit(this.patient)
   }
 
-  deletePatient(patient) {
-    this.removePatient.emit(patient)
+  deletePatient() {
+    this.removePatient.emit(this.patient)
   }
 
 }
