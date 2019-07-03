@@ -198,6 +198,7 @@ export class PortalState implements NgxsOnInit {
   @Action(AddPatient)
   add(ctx: StateContext<PortalStateModel>, {payload}: AddPatient) {
     const state = ctx.getState()
+    // TODO get patient ID
     ctx.patchState({
       patients: [...state.patients, payload]
     })

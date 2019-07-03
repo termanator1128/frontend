@@ -20,7 +20,7 @@ export class AppComponent {
   }
 
 
-  newPatient() {
+  setNewPatientState() {
     this.store.dispatch(new SetState('new'))
   }
 

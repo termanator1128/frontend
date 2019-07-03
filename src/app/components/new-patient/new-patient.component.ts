@@ -14,12 +14,10 @@ export class NewPatientComponent {
   constructor() {
   }
 
-  saveNewPatient(newPtDetailsAndName) {
-    const name = newPtDetailsAndName.name
-    delete newPtDetailsAndName.name
+  saveNewPatient(patientInfo) {
     const newPatient: Patient = {
-      name,
-      info: newPtDetailsAndName,
+      id: undefined,
+      info: patientInfo,
       notes: '',
       scripts: undefined,
       allergies: undefined,

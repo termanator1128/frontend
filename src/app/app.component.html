@@ -1,7 +1,7 @@
 <div class="all-but-footer">
   <app-main-search
     (selectPatient)="patientSelect($event)"
-    (createNew)="newPatient()"
+    (createNew)="setNewPatientState()"
     [patients]="patients$ | async"
   ></app-main-search>
   <div *ngIf="columns$ | async as columns" [ngSwitch]="state$ | async" class="content">
