@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core'
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms'
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms'
+import {PatientColumns} from '../../models/Column'
 
 @Component({
   selector: 'app-form',
@@ -26,14 +27,15 @@ export class FormComponent implements OnInit, OnChanges {
   }
 
   createForm(): any {
-    const cols = this.cols
+    const cols: PatientColumns = this.cols
     this.form = this.formBuilder.group({})
     for (const key in cols) {
       if (cols.hasOwnProperty(key)) {
         if (!this.row) {
-          this.form.addControl(cols[key].field, new FormControl(undefined))
+          this.form.addControl(cols[key], new FormControl(undefined))
         } else {
-          this.form.addControl(cols[key].field, new FormControl(this.row[cols[key].field]))
+          this.form.addControl(cols[key].controlName, new FormControl(this.row[cols[key].controlName],
+            cols[key].required ? Validators.required : null))
         }
       }
     }
@@ -60,13 +62,13 @@ export class FormComponent implements OnInit, OnChanges {
 
   edit() {
     const updateRow = this.collectFormData()
-    updateRow.id = this.row.id
+    updateRow._id = this.row._id
     this.editRow.emit(updateRow)
   }
 
   delete() {
     const deleteRow = this.collectFormData()
-    deleteRow.id = this.row.id
+    deleteRow._id = this.row._id
     this.deleteRow.emit(deleteRow)
   }
 

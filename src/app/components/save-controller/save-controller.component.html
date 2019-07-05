@@ -1,0 +1,15 @@
+<div class="ui-dialog-buttonpane ui-helper-clearfix">
+  <div *ngIf="!new; else add" class="form-controls">
+    <div>
+      <button (click)="hide()" class="ui-button-secondary" label="Cancel" pButton type="button"></button>
+      <button (click)="edit()" [disabled]="saveDisabled" label="Update" pButton type="button"></button>
+    </div>
+    <button (click)="delete()" class="ui-button-danger" label="Delete" pButton type="button"></button>
+  </div>
+  <ng-template #add>
+    <div>
+      <button (click)="hide()" class="ui-button-secondary" label="Cancel" pButton type="button"></button>
+      <button (click)="save()" [disabled]="saveDisabled" label="Save" pButton type="button"></button>
+    </div>
+  </ng-template>
+</div>

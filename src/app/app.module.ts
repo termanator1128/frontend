@@ -34,6 +34,8 @@ import {environment} from '../environments/environment'
 import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin'
 import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin'
 import {HttpClientModule} from '@angular/common/http'
+import {FormControlComponent} from './components/form-control/form-control.component'
+import {SaveControllerComponent} from './components/save-controller/save-controller.component'
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import {HttpClientModule} from '@angular/common/http'
     TableComponent,
     MainSearchComponent,
     NewPatientComponent,
+    FormControlComponent,
+    SaveControllerComponent,
   ],
   imports: [
     BrowserModule,

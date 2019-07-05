@@ -17,7 +17,6 @@ export class PtTabsComponent implements OnInit {
   @Input() patient: Patient
   activeTab = 0
 
-  // TODO call state here
   constructor(private store: Store) {
   }
 
@@ -34,15 +33,15 @@ export class PtTabsComponent implements OnInit {
   }
 
   addRx(prescriptions: Rx) {
-    this.store.dispatch(new AddRx(prescriptions, this.patient.id))
+    this.store.dispatch(new AddRx(prescriptions, this.patient._id))
   }
 
   editRx(prescriptions: Rx) {
-    this.store.dispatch(new UpdateRx(prescriptions, this.patient.id))
+    this.store.dispatch(new UpdateRx(prescriptions, this.patient._id))
   }
 
   deleteRx(prescriptions: Rx) {
-    this.store.dispatch(new RemoveRx(prescriptions, this.patient.id))
+    this.store.dispatch(new RemoveRx(prescriptions, this.patient._id))
   }
 
 

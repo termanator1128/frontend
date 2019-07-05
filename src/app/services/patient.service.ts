@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core'
 import {HttpClient} from '@angular/common/http'
 import {Patient} from '../models/Patient'
 import {Observable} from 'rxjs'
+import {Response} from '../models/Response'
 
 export const baseUrl = 'http://localhost:8080/api'
 
@@ -18,19 +19,19 @@ export class PatientService {
     return this.http.get<{ data: Patient[] }>(`${baseUrl}/patients`)
   }
 
-  postPatient(patient: Patient): Observable<{ data: Patient }> {
-    return this.http.post<{ data: Patient }>(`${baseUrl}/patients/`, patient)
+  postPatient(patient: Patient): Observable<Response> {
+    return this.http.post<Response>(`${baseUrl}/patients/`, patient)
   }
 
-  getPatient(id: string): Observable<{ data: Patient }> {
-    return this.http.get<{ data: Patient }>(`${baseUrl}/patients/${id}`)
+  getPatient(patientID: string): Observable<Response> {
+    return this.http.get<Response>(`${baseUrl}/patients/${patientID}`)
   }
 
-  deletePatient(id: string): Observable<{ data: Patient }> {
-    return this.http.delete<{ data: Patient }>(`${baseUrl}/patients/${id}`)
+  deletePatient(patientID: string): Observable<Response> {
+    return this.http.delete<Response>(`${baseUrl}/patients/${patientID}`)
   }
 
-  putPatient(patient: Patient, id: string): Observable<{ data: Patient }> {
-    return this.http.put<{ data: Patient }>(`${baseUrl}/patients/${id}`, patient)
+  putPatient(patientID: string, patient: Patient): Observable<Response> {
+    return this.http.put<Response>(`${baseUrl}/patients/${patientID}`, patient)
   }
 }

@@ -1,0 +1,45 @@
+<div [ngSwitch]="row.type">
+  <form [formGroup]="form">
+    <div *ngSwitchCase="'date'" class="ui-g-12">
+      <div class="ui-g-4">
+        {{row.label}} <span *ngIf="row.required" class="required">*</span>
+      </div>
+      <div class="ui-g-8">
+        <p-inputMask [formControlName]="row.controlName" mask="99/99/9999" slotChar="mm/dd/yyyy"
+                     styleClass="ui-inputtext"></p-inputMask>
+      </div>
+    </div>
+    <div *ngSwitchCase="'number'" class="ui-g-12">
+      <div class="ui-g-4">
+        {{row.label}} <span *ngIf="row.required" class="required">*</span>
+      </div>
+      <div class="ui-g-8">
+        <input [formControlName]="row.controlName" pInputText pKeyFilter="int" placeholder="Enter a number..."
+               type="text">
+      </div>
+    </div>
+    <div *ngSwitchCase="'sex'" class="ui-g-12">
+      <div class="ui-g-4">
+        {{row.label}} <span *ngIf="row.required" class="required">*</span>
+      </div>
+      <div class="ui-g">
+        <div class="ui-g-12">
+          <p-radioButton [formControlName]="row.controlName" inputId="opt1" label="Male" name="group1"
+                         value="Male"></p-radioButton>
+        </div>
+        <div class="ui-g-12">
+          <p-radioButton [formControlName]="row.controlName" inputId="opt2" label="Female" name="group1"
+                         value="Female"></p-radioButton>
+        </div>
+      </div>
+    </div>
+    <div *ngSwitchDefault class="ui-g-12">
+      <div class="ui-g-4">
+        {{row.label}} <span *ngIf="row.required" class="required">*</span>
+      </div>
+      <div class="ui-g-8">
+        <input [formControlName]="row.controlName" [id]="row.controlName" pInputText/>
+      </div>
+    </div>
+  </form>
+</div>

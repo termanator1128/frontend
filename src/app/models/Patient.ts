@@ -4,7 +4,7 @@ import {Allergy} from './Allergy'
 import {PatientInfo} from './PatientInfo'
 
 export interface Patient {
-  id: string
+  _id: string
   info: PatientInfo
   scripts: Rx[]
   history: MedicalHistory[]

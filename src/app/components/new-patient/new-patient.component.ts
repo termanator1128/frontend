@@ -16,7 +16,7 @@ export class NewPatientComponent {
 
   saveNewPatient(patientInfo) {
     const newPatient: Patient = {
-      id: undefined,
+      _id: undefined,
       info: patientInfo,
       notes: '',
       scripts: [],

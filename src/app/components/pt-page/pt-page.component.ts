@@ -17,8 +17,9 @@ export class PtPageComponent {
   }
 
   editDetails(patientInfo: PatientInfo) {
-    this.patient.info = patientInfo
-    this.store.dispatch(new UpdatePatient(this.patient))
+    const patientCopy = JSON.parse(JSON.stringify(this.patient))
+    patientCopy.info = patientInfo
+    this.store.dispatch(new UpdatePatient(patientCopy))
   }
 
   deletePatient() {

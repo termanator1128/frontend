@@ -5,35 +5,35 @@ import {Patient} from '../models/Patient'
 import {SetSelectedPatient, SetState} from './actions/state.action'
 import {Rx} from '../models/Rx'
 import {PatientService} from '../services/patient.service'
+import {PatientColumns} from '../models/Column'
 
-const columns = {
+const columns: PatientColumns = {
   rx: [
-    {field: 'date', header: 'Prescribed on'},
-    {field: 'drug', header: 'Drug'},
-    {field: 'dosage', header: 'Dosage'},
-    {field: 'reason', header: 'Reason for taking'},
-    {field: 'prescriber', header: 'Prescribed by'}
+    {controlName: 'date', type: 'date', label: 'Prescribed on', required: true},
+    {controlName: 'drug', type: 'text', label: 'Drug', required: true},
+    {controlName: 'dosage', type: 'text', label: 'Dosage', required: true},
+    {controlName: 'reason', type: 'text', label: 'Reason for taking', required: true},
+    {controlName: 'prescriber', type: 'text', label: 'Prescribed by', required: true}
   ],
   history: [
-    {field: 'date', header: 'Onset'},
-    {field: 'diagnosis', header: 'Diagnosis'},
-    {field: 'diagnoser', header: 'Diagnosed by'}
+    {controlName: 'date', type: 'date', label: 'Onset', required: true},
+    {controlName: 'diagnosis', type: 'text', label: 'Diagnosis', required: true},
+    {controlName: 'diagnoser', type: 'text', label: 'Diagnosed by', required: true}
   ],
   allergy: [
-    {field: 'allergy', header: 'Allergy'},
-    {field: 'reaction', header: 'Reaction'},
-    {field: 'severity', header: 'Severity'}
+    {controlName: 'allergy', type: 'text', label: 'Allergy', required: true},
+    {controlName: 'reaction', type: 'text', label: 'Reaction', required: true},
+    {controlName: 'severity', type: 'text', label: 'Severity', required: true}
   ],
   details: [
-    {field: 'name', header: 'Name'},
-    {field: 'age', header: 'Age'},
-    {field: 'sex', header: 'Sex'},
-    {field: 'pronouns', header: 'Pronouns'},
-    {field: 'dob', header: 'DOB'},
-    {field: 'address', header: 'Address'},
+    {controlName: 'name', type: 'text', label: 'Name', required: true},
+    {controlName: 'age', type: 'number', label: 'Age', required: true},
+    {controlName: 'sex', type: 'sex', label: 'Sex', required: true},
+    {controlName: 'pronouns', type: 'text', label: 'Pronouns', required: false},
+    {controlName: 'dob', type: 'date', label: 'DOB', required: true},
+    {controlName: 'address', type: 'text', label: 'Address', required: false}
   ]
 }
-
 
 export class PortalStateModel {
   patients: Patient[]
@@ -103,6 +103,7 @@ export class PortalState implements NgxsOnInit {
   /* Patient */
   @Action(AddPatient)
   addPatient(ctx: StateContext<PortalStateModel>, {payload}: AddPatient) {
+    console.log('made it')
     const state = ctx.getState()
     this.patientService.postPatient(payload).subscribe(resp => {
       const patient: Patient = resp.data
@@ -116,24 +117,30 @@ export class PortalState implements NgxsOnInit {
 
   @Action(RemovePatient)
   removePatient(ctx: StateContext<PortalStateModel>, {payload}: RemovePatient) {
-    this.patientService.deletePatient(payload.id).subscribe()
-    ctx.patchState({
-      patients: ctx.getState().patients.filter(a => a.id !== payload.id),
-      state: 'landing',
-      selectedPatient: undefined
+    this.patientService.deletePatient(payload._id).subscribe(resp => {
+      if (resp.status === 'success') {
+        ctx.patchState({
+          patients: ctx.getState().patients.filter(a => a._id !== payload._id),
+          state: 'landing',
+          selectedPatient: undefined
+        })
+      } else {
+        throw new Error('Unable to delete')
+      }
     })
   }
 
   @Action(UpdatePatient)
   updatePatient(ctx: StateContext<PortalStateModel>, {payload}: UpdatePatient) {
-    const patients = ctx.getState().patients
-    const index = patients.findIndex(patient => {
-      return patient.id === payload.id
-    })
-    patients[index] = payload
-    ctx.patchState({
-      patients,
-      selectedPatient: payload
+    this.patientService.putPatient(payload._id, payload).subscribe(resp => {
+      if (resp.status === 'success') {
+        ctx.patchState({
+          selectedPatient: resp.data
+        })
+        return ctx.dispatch(new GetPatients())
+      } else {
+        throw new Error('Unable to update')
+      }
     })
   }
 
@@ -157,7 +164,7 @@ export class PortalState implements NgxsOnInit {
     // Cleanup Stuff
     const patients = state.patients
     patients.filter(patient => {
-      return patient.id !== patientID
+      return patient._id !== patientID
     })
     ctx.patchState({
       patients
@@ -166,18 +173,16 @@ export class PortalState implements NgxsOnInit {
 
   @Action(UpdateRx)
   updateRx(ctx: StateContext<PortalStateModel>, {payload, patientID}: UpdateRx) {
-    console.log(payload)
-    console.log(patientID)
     const state = ctx.getState()
     // DB Stuff
     // Cleanup Stuff
     const patients = JSON.parse(JSON.stringify(state.patients))
     const patientIndex = patients.findIndex(patient => {
-      return patient.id === patientID
+      return patient._id === patientID
     })
     if (patientIndex !== undefined) {
       const scriptIndex = patients[patientIndex].scripts.findIndex(script => {
-        return script.id === payload.id
+        return script._id === payload._id
       })
       if (scriptIndex !== undefined) {
         patients[patientIndex].scripts[scriptIndex] = payload
@@ -187,7 +192,6 @@ export class PortalState implements NgxsOnInit {
     } else {
       throw new Error('not a valid patientID')
     }
-    console.log(patients)
     ctx.patchState({
       patients
     })
