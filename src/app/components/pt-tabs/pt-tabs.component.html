@@ -3,47 +3,43 @@
   <p-tabView (onChange)="handleChange($event)" class="no-pad">
     <p-tabPanel class="no-pad" header="Rx" leftIcon="pi pi-list">
       <app-table
-        (deleteRow)="deleteRx($event)"
+        (addRow)="addRx($event)"
         (editRow)="editRx($event)"
-        (saveRow)="saveRx($event)"
+        (deleteRow)="deleteRx($event)"
         *ngIf="activeTab === 0"
         [cols]="columns.rx"
         [rows]="patient.scripts"
-        addLabel="Prescribe"
-        tableLabel="Prescriptions"
-        modalTitle="Edit Prescription"
+        addRowButtonLabel="Prescribe"
+        addRowModalTitle="Edit Prescription"
+        tableTitle="Prescriptions"
       ></app-table>
     </p-tabPanel>
-    <p-tabPanel header="Medical History" leftIcon="pi pi-user">
+    <!--<p-tabPanel header="Medical History" leftIcon="pi pi-user">
       <app-table
-        (deleteRow)="deleteHist($event)"
-        (editRow)="editHist($event)"
-        (saveRow)="saveHist($event)"
+        (add)="changeHistory($event)"
         *ngIf="activeTab === 1"
         [cols]="columns.history"
         [rows]="patient.history"
-        addLabel="Add Diagnosis"
-        tableLabel="Previous Diagnoses"
-        modalTitle="Edit Diagnosis"
+        addRowButtonLabel="Add Diagnosis"
+        tableTitle="Previous Diagnoses"
+        addRowModalTitle="Edit Diagnosis"
       ></app-table>
     </p-tabPanel>
     <p-tabPanel header="Allergies" leftIcon="pi pi-eye">
       <app-table
-        (deleteRow)="deleteAllergy($event)"
-        (editRow)="editAllergy($event)"
-        (saveRow)="saveAllergy($event)"
+        (updateRows)="changeAllergies($event)"
         *ngIf="activeTab === 2"
         [cols]="columns.allergy"
         [rows]="patient.allergies"
-        addLabel="Add Allergy"
-        tableLabel="Allergies"
-        modalTitle="Edit Allergy"
+        addRowButtonLabel="Add Allergy"
+        tableTitle="Allergies"
+        addRowModalTitle="Edit Allergy"
       ></app-table>
-    </p-tabPanel>
+    </p-tabPanel>-->
     <p-tabPanel header="Other Notes" leftIcon="pi pi-pencil">
       <app-pt-notes
         *ngIf="activeTab === 3"
-        (notesEdit)="saveNotes($event)"
+        (notesEdit)="changeNotes($event)"
         [notes]="patient.notes"
       ></app-pt-notes>
     </p-tabPanel>

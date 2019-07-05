@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core'
-import {Patient} from '../../models/Patient'
 import {PatientInfo} from '../../models/PatientInfo'
 
 @Component({
@@ -10,8 +9,8 @@ import {PatientInfo} from '../../models/PatientInfo'
 export class PtSummaryComponent implements OnChanges {
   @Input() info: PatientInfo
   @Input() columns
-  @Output() editDetails: EventEmitter<Patient> = new EventEmitter()
-  @Output() deletePatient: EventEmitter<Patient> = new EventEmitter()
+  @Output() editDetails: EventEmitter<PatientInfo> = new EventEmitter()
+  @Output() deletePatient: EventEmitter<any> = new EventEmitter()
   display = false
 
   constructor() {

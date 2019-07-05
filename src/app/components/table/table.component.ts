@@ -8,10 +8,10 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core'
 export class TableComponent implements OnInit {
   @Input() rows: any[]
   @Input() cols: any[]
-  @Input() tableLabel: string
-  @Input() addLabel: string
-  @Input() modalTitle: string
-  @Output() saveRow: EventEmitter<any> = new EventEmitter()
+  @Input() tableTitle: string
+  @Input() addRowButtonLabel: string
+  @Input() addRowModalTitle: string
+  @Output() addRow: EventEmitter<any> = new EventEmitter()
   @Output() editRow: EventEmitter<any> = new EventEmitter()
   @Output() deleteRow: EventEmitter<any> = new EventEmitter()
   selectedRow: any
@@ -51,18 +51,18 @@ export class TableComponent implements OnInit {
     this.visible = true
   }
 
-  delete(row) {
-    this.deleteRow.emit(row)
+  delete(rowToBeDeleted) {
+    this.deleteRow.emit(rowToBeDeleted)
     this.reset()
   }
 
-  save(row) {
-    this.saveRow.emit(row)
+  save(newRow) {
+    this.addRow.emit(newRow)
     this.reset()
   }
 
-  edit(row) {
-    this.editRow.emit(row)
+  edit(editedRow) {
+    this.editRow.emit(editedRow)
     this.reset()
   }
 

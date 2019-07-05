@@ -1,5 +1,5 @@
 export interface MedicalHistory {
-  id: number
+  id: string
   date: string
   diagnosis: string
   diagnoser: string

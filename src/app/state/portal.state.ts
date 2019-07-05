@@ -1,6 +1,10 @@
 import {Action, NgxsOnInit, Selector, State, StateContext} from '@ngxs/store'
+import {AddRx, RemoveRx, UpdateRx} from './actions/rx.action'
+import {AddPatient, GetPatients, RemovePatient, UpdatePatient} from './actions/patient.action'
 import {Patient} from '../models/Patient'
-import {AddPatient, RemovePatient, SetSelectedPatient, SetState, UpdatePatient} from './portal.action'
+import {SetSelectedPatient, SetState} from './actions/state.action'
+import {Rx} from '../models/Rx'
+import {PatientService} from '../services/patient.service'
 
 const columns = {
   rx: [
@@ -36,6 +40,7 @@ export class PortalStateModel {
   columns: {}
   state: 'landing' | 'new' | 'patient'
   selectedPatient: Patient
+  scripts: Rx[]
 }
 
 @State<PortalStateModel>({
@@ -44,11 +49,14 @@ export class PortalStateModel {
     patients: [],
     columns,
     state: 'landing',
-    selectedPatient: undefined
+    selectedPatient: undefined,
+    scripts: []
   }
 })
 
 export class PortalState implements NgxsOnInit {
+  constructor(private patientService: PatientService) {
+  }
 
   @Selector()
   static getPatients(state: PortalStateModel) {
@@ -71,121 +79,18 @@ export class PortalState implements NgxsOnInit {
   }
 
   ngxsOnInit(ctx: StateContext<PortalStateModel>) {
-    const patients: Patient[] = [
-      {
-        id: 0,
-        scripts: [
-          {
-            id: 0,
-            date: '06/30/2019',
-            drug: 'Vicodin',
-            dosage: '500mg',
-            reason: 'because',
-            prescriber: 'Liam Salazar, M.D.'
-          },
-          {
-            id: 1,
-            date: '06/30/2019',
-            drug: 'Fentanyl',
-            dosage: '100mcg',
-            reason: 'because',
-            prescriber: 'Liam Salazar, M.D.'
-          },
-          {
-            id: 2,
-            date: '06/30/2019',
-            drug: 'Amoxicilyn',
-            dosage: '500mg',
-            reason: 'because',
-            prescriber: 'Liam Salazar, M.D.'
-          },
-        ],
-        history: [
-          {
-            id: 0,
-            date: '06/30/2019',
-            diagnosis: 'Concussion',
-            diagnoser: 'Liam Salazar, M.D.'
-          }
-        ],
-        allergies: [
-          {
-            id: 1,
-            allergy: 'Penicilin',
-            reaction: 'hives',
-            severity: 'Moderate'
-          }
-        ],
-        info: {
-          name: 'Sophie Richmond',
-          age: 21,
-          sex: 'Female',
-          pronouns: 'Feminine',
-          dob: '06/30/2019',
-          address: '2 Freedom Way'
-        },
-        notes: '<p>hi</p>'
-      },
-      {
-        id: 1,
-        scripts: [
-          {
-            id: 10,
-            date: '06/30/2019',
-            drug: 'Vicodin',
-            dosage: '500mg',
-            reason: 'because',
-            prescriber: 'Liam Salazar, M.D.'
-          },
-          {
-            id: 11,
-            date: '06/30/2019',
-            drug: 'Fentanyl',
-            dosage: '100mcg',
-            reason: 'because',
-            prescriber: 'Liam Salazar, M.D.'
-          },
-          {
-            id: 12,
-            date: '06/30/2019',
-            drug: 'Amoxicilyn',
-            dosage: '500mg',
-            reason: 'because',
-            prescriber: 'Liam Salazar, M.D.'
-          },
-        ],
-        history: [
-          {
-            id: 10,
-            date: '06/30/2019',
-            diagnosis: 'Concussion',
-            diagnoser: 'Liam Salazar, M.D.'
-          }
-        ],
-        allergies: [
-          {
-            id: 10,
-            allergy: 'Penicilin',
-            reaction: 'hives',
-            severity: 'Moderate'
-          }
-        ],
-        info: {
-          name: 'Josh Parker',
-          age: 30,
-          sex: 'Male',
-          pronouns: 'Masculine',
-          dob: '06/30/2019',
-          address: '2 Freedom Way'
-        },
-        notes: '<p>hello</p>'
-      }
-    ]
-    ctx.patchState({
-      patients
-    })
-
+    return ctx.dispatch(new GetPatients())
   }
+
+  @Action(GetPatients)
+  getPatients(ctx: StateContext<PortalStateModel>, {}: SetState) {
+    this.patientService.getPatients().subscribe(resp => {
+      ctx.patchState({
+        patients: resp.data
+      })
+    })
+  }
+
 
   @Action(SetState)
   setState(ctx: StateContext<PortalStateModel>, {payload}: SetState) {
@@ -195,17 +100,23 @@ export class PortalState implements NgxsOnInit {
     })
   }
 
+  /* Patient */
   @Action(AddPatient)
-  add(ctx: StateContext<PortalStateModel>, {payload}: AddPatient) {
+  addPatient(ctx: StateContext<PortalStateModel>, {payload}: AddPatient) {
     const state = ctx.getState()
-    // TODO get patient ID
-    ctx.patchState({
-      patients: [...state.patients, payload]
+    this.patientService.postPatient(payload).subscribe(resp => {
+      const patient: Patient = resp.data
+      ctx.patchState({
+        patients: [...state.patients, patient],
+        state: 'patient',
+        selectedPatient: patient
+      })
     })
   }
 
   @Action(RemovePatient)
-  remove(ctx: StateContext<PortalStateModel>, {payload}: RemovePatient) {
+  removePatient(ctx: StateContext<PortalStateModel>, {payload}: RemovePatient) {
+    this.patientService.deletePatient(payload.id).subscribe()
     ctx.patchState({
       patients: ctx.getState().patients.filter(a => a.id !== payload.id),
       state: 'landing',
@@ -214,7 +125,7 @@ export class PortalState implements NgxsOnInit {
   }
 
   @Action(UpdatePatient)
-  update(ctx: StateContext<PortalStateModel>, {payload}: UpdatePatient) {
+  updatePatient(ctx: StateContext<PortalStateModel>, {payload}: UpdatePatient) {
     const patients = ctx.getState().patients
     const index = patients.findIndex(patient => {
       return patient.id === payload.id
@@ -225,6 +136,66 @@ export class PortalState implements NgxsOnInit {
       selectedPatient: payload
     })
   }
+
+  /* Rx */
+  @Action(AddRx)
+  addRx(ctx: StateContext<PortalStateModel>, {payload, patientID}: AddRx) {
+    const state = ctx.getState()
+    // DB Stuff
+    // TODO get id from DB
+    // payload.id = Math.floor(Math.random() * Math.floor(100000))
+    // Cleanup Stuff
+    ctx.patchState({
+      scripts: [...state.scripts, payload]
+    })
+  }
+
+  @Action(RemoveRx)
+  removeRx(ctx: StateContext<PortalStateModel>, {payload, patientID}: RemoveRx) {
+    const state = ctx.getState()
+    // DB Stuff
+    // Cleanup Stuff
+    const patients = state.patients
+    patients.filter(patient => {
+      return patient.id !== patientID
+    })
+    ctx.patchState({
+      patients
+    })
+  }
+
+  @Action(UpdateRx)
+  updateRx(ctx: StateContext<PortalStateModel>, {payload, patientID}: UpdateRx) {
+    console.log(payload)
+    console.log(patientID)
+    const state = ctx.getState()
+    // DB Stuff
+    // Cleanup Stuff
+    const patients = JSON.parse(JSON.stringify(state.patients))
+    const patientIndex = patients.findIndex(patient => {
+      return patient.id === patientID
+    })
+    if (patientIndex !== undefined) {
+      const scriptIndex = patients[patientIndex].scripts.findIndex(script => {
+        return script.id === payload.id
+      })
+      if (scriptIndex !== undefined) {
+        patients[patientIndex].scripts[scriptIndex] = payload
+      } else {
+        throw new Error('not a valid RxID')
+      }
+    } else {
+      throw new Error('not a valid patientID')
+    }
+    console.log(patients)
+    ctx.patchState({
+      patients
+    })
+  }
+
+  /* History */
+
+  /* Allergy */
 
   @Action(SetSelectedPatient)
   setSelectedPatient(ctx: StateContext<PortalStateModel>, {payload}: SetSelectedPatient) {

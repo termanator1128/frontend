@@ -19,17 +19,21 @@ import {
   RadioButtonModule,
   TabViewModule
 } from 'primeng/primeng'
-import {PtSummaryComponent} from './pt-page/pt-summary/pt-summary.component'
-import {PtNotesComponent} from './pt-page/pt-tabs/pt-notes/pt-notes.component'
-import {FormComponent} from './pt-page/pt-tabs/table/form/form.component'
-import {PtPageComponent} from './pt-page/pt-page.component'
-import {PtTabsComponent} from './pt-page/pt-tabs/pt-tabs.component'
-import {TableComponent} from './pt-page/pt-tabs/table/table.component'
+import {PtSummaryComponent} from './components/pt-summary/pt-summary.component'
+import {PtNotesComponent} from './components/pt-notes/pt-notes.component'
+import {FormComponent} from './components/form/form.component'
+import {PtPageComponent} from './components/pt-page/pt-page.component'
+import {PtTabsComponent} from './components/pt-tabs/pt-tabs.component'
+import {TableComponent} from './components/table/table.component'
 import {TabMenuModule} from 'primeng/tabmenu'
 import {MainSearchComponent} from './components/main-search/main-search.component'
 import {NgxsModule} from '@ngxs/store'
 import {PortalState} from './state/portal.state'
 import {NewPatientComponent} from './components/new-patient/new-patient.component'
+import {environment} from '../environments/environment'
+import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin'
+import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin'
+import {HttpClientModule} from '@angular/common/http'
 
 @NgModule({
   declarations: [
@@ -63,8 +67,11 @@ import {NewPatientComponent} from './components/new-patient/new-patient.componen
     KeyFilterModule,
     NgxsModule.forRoot([
       PortalState
-    ]),
-    EditorModule
+    ], {developmentMode: !environment.production}),
+    EditorModule,
+    NgxsReduxDevtoolsPluginModule.forRoot(),
+    NgxsLoggerPluginModule.forRoot(),
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

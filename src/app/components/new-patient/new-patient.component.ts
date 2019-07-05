@@ -19,9 +19,9 @@ export class NewPatientComponent {
       id: undefined,
       info: patientInfo,
       notes: '',
-      scripts: undefined,
-      allergies: undefined,
-      history: undefined
+      scripts: [],
+      allergies: [],
+      history: []
     }
     this.addRow.emit(newPatient)
   }

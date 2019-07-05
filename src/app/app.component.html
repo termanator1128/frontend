@@ -7,10 +7,7 @@
   <div *ngIf="columns$ | async as columns" [ngSwitch]="state$ | async" class="content">
     <div *ngSwitchCase="'patient'">
       <app-pt-page
-        (addPatient)="saveNewPatient($event)"
         [columns]="columns"
-        (removePatient)="deletePatient($event)"
-        (updatePatient)="updateExistingPatient($event)"
         *ngIf="selectedPatient$ | async as selectedPatient"
         [patient]="selectedPatient"
       ></app-pt-page>

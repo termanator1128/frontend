@@ -1,7 +1,7 @@
 <p-table (onRowSelect)="onRowSelect($event)" [(selection)]="selectedRow" [columns]="cols" [paginator]="true"
          [rows]="15" [value]="rows" selectionMode="single">
   <ng-template pTemplate="caption">
-    {{tableLabel}}
+    {{tableTitle}}
   </ng-template>
   <ng-template let-columns pTemplate="header">
     <tr>
@@ -20,7 +20,7 @@
   </ng-template>
   <ng-template let-rowData pTemplate="summary">
     <div style="text-align:left">
-      <button (click)="showDialogToAdd()" [label]="addLabel" pButton type="button"></button>
+      <button (click)="showDialogToAdd()" [label]="addRowButtonLabel" pButton type="button"></button>
     </div>
   </ng-template>
 
@@ -30,7 +30,7 @@
   [cols]="cols"
   [display]="visible"
   [row]="selectedRow"
-  [headerTitle]="modalTitle"
+  [headerTitle]="addRowModalTitle"
   (addRow)="save($event)"
   (editRow)="edit($event)"
   (deleteRow)="delete($event)"

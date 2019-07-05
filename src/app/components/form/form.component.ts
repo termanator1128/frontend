@@ -40,7 +40,7 @@ export class FormComponent implements OnInit, OnChanges {
   }
 
   collectFormData() {
-    const obj = {}
+    const obj: any = {}
     const form: FormGroup = this.form
     for (const key in form.controls) {
       obj[key] = form.get(key).value
@@ -54,16 +54,19 @@ export class FormComponent implements OnInit, OnChanges {
 
   save() {
     const newRow = this.collectFormData()
+    newRow.id = this.row.id
     this.addRow.emit(newRow)
   }
 
   edit() {
     const updateRow = this.collectFormData()
+    updateRow.id = this.row.id
     this.editRow.emit(updateRow)
   }
 
   delete() {
     const deleteRow = this.collectFormData()
+    deleteRow.id = this.row.id
     this.deleteRow.emit(deleteRow)
   }
 

@@ -1,5 +1,5 @@
 export interface Rx {
-  id: number
+  id: string
   date: string,
   drug: string,
   dosage: string,

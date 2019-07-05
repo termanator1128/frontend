@@ -1,5 +1,5 @@
 export interface Allergy {
-  id: number
+  id: string
   allergy: string
   reaction: string
   severity: 'Mild' | 'Moderate' | 'Severe'

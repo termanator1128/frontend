@@ -20,6 +20,8 @@
     "@angular/platform-browser": "~8.0.3",
     "@angular/platform-browser-dynamic": "~8.0.3",
     "@angular/router": "~8.0.3",
+    "@ngxs/devtools-plugin": "^3.4.3",
+    "@ngxs/logger-plugin": "^3.4.3",
     "@ngxs/store": "^3.4.3",
     "chart.js": "^2.8.0",
     "primeicons": "^1.0.0",

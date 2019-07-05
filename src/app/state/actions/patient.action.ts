@@ -1,5 +1,4 @@
-import {Patient} from '../models/Patient'
-
+import {Patient} from '../../models/Patient'
 
 export class AddPatient {
   static readonly type = '[PATIENT] Add'
@@ -22,16 +21,9 @@ export class UpdatePatient {
   }
 }
 
-export class SetState {
-  static readonly type = '[STATE] Set'
+export class GetPatients {
+  static readonly type = '[PATIENTS] GET'
 
-  constructor(public payload: 'landing' | 'new' | 'patient') {
-  }
-}
-
-export class SetSelectedPatient {
-  static readonly type = '[PATIENT] Set'
-
-  constructor(public payload: Patient) {
+  constructor() {
   }
 }
