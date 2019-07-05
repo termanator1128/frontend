@@ -5,16 +5,16 @@
   </ng-template>
   <ng-template let-columns pTemplate="header">
     <tr>
-      <th *ngFor="let col of columns" [pSortableColumn]="col.field">
-        {{col.header}}
-        <p-sortIcon [field]="col.field"></p-sortIcon>
+      <th *ngFor="let col of columns" [pSortableColumn]="col.controlName">
+        {{col.label}}
+        <p-sortIcon [field]="col.controlName"></p-sortIcon>
       </th>
     </tr>
   </ng-template>
   <ng-template let-columns="columns" let-rowData pTemplate="body">
     <tr [pSelectableRow]="rowData">
       <td *ngFor="let col of columns">
-        {{rowData[col.field]}}
+        {{rowData[col.controlName]}}
       </td>
     </tr>
   </ng-template>

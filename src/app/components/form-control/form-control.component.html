@@ -4,9 +4,8 @@
       <div class="ui-g-4">
         {{row.label}} <span *ngIf="row.required" class="required">*</span>
       </div>
-      <div class="ui-g-8">
-        <p-inputMask [formControlName]="row.controlName" mask="99/99/9999" slotChar="mm/dd/yyyy"
-                     styleClass="ui-inputtext"></p-inputMask>
+      <div>
+        <input [formControlName]="row.controlName" [id]="row.controlName" pInputText/>
       </div>
     </div>
     <div *ngSwitchCase="'number'" class="ui-g-12">

@@ -6,6 +6,11 @@ import {SetSelectedPatient, SetState} from './actions/state.action'
 import {Rx} from '../models/Rx'
 import {PatientService} from '../services/patient.service'
 import {PatientColumns} from '../models/Column'
+import {RxService} from '../services/rx.service'
+import {HistoryService} from '../services/history.service'
+import {AllergyService} from '../services/allergy.service'
+import {AddHistory, RemoveHistory, UpdateHistory} from './actions/history.action'
+import {AddAllergy, RemoveAllergy, UpdateAllergy} from './actions/allergy.action'
 
 const columns: PatientColumns = {
   rx: [
@@ -55,7 +60,12 @@ export class PortalStateModel {
 })
 
 export class PortalState implements NgxsOnInit {
-  constructor(private patientService: PatientService) {
+  constructor(
+    private patientService: PatientService,
+    private rxService: RxService,
+    private historyService: HistoryService,
+    private allergyService: AllergyService
+  ) {
   }
 
   @Selector()
@@ -97,6 +107,14 @@ export class PortalState implements NgxsOnInit {
     ctx.patchState({
       state: payload,
       selectedPatient: undefined
+    })
+  }
+
+  @Action(SetSelectedPatient)
+  setSelectedPatient(ctx: StateContext<PortalStateModel>, {payload}: SetSelectedPatient) {
+    ctx.patchState({
+      state: 'patient',
+      selectedPatient: payload
     })
   }
 
@@ -147,65 +165,138 @@ export class PortalState implements NgxsOnInit {
   /* Rx */
   @Action(AddRx)
   addRx(ctx: StateContext<PortalStateModel>, {payload, patientID}: AddRx) {
-    const state = ctx.getState()
-    // DB Stuff
-    // TODO get id from DB
-    // payload.id = Math.floor(Math.random() * Math.floor(100000))
-    // Cleanup Stuff
-    ctx.patchState({
-      scripts: [...state.scripts, payload]
+    this.rxService.postRx(patientID, payload).subscribe(resp => {
+      if (resp.status === 'success') {
+        ctx.patchState({
+          selectedPatient: resp.data
+        })
+        return ctx.dispatch(new GetPatients())
+      } else {
+        throw new Error('Unable to add Rx')
+      }
     })
   }
 
   @Action(RemoveRx)
   removeRx(ctx: StateContext<PortalStateModel>, {payload, patientID}: RemoveRx) {
-    const state = ctx.getState()
-    // DB Stuff
-    // Cleanup Stuff
-    const patients = state.patients
-    patients.filter(patient => {
-      return patient._id !== patientID
-    })
-    ctx.patchState({
-      patients
+    this.rxService.deleteRx(patientID, payload._id).subscribe(resp => {
+      if (resp) {
+        console.log(resp)
+        if (resp.status === 'success') {
+          ctx.patchState({
+            selectedPatient: resp.data
+          })
+          return ctx.dispatch(new GetPatients())
+        } else {
+          throw new Error(resp.status)
+        }
+      }
     })
   }
 
   @Action(UpdateRx)
   updateRx(ctx: StateContext<PortalStateModel>, {payload, patientID}: UpdateRx) {
-    const state = ctx.getState()
-    // DB Stuff
-    // Cleanup Stuff
-    const patients = JSON.parse(JSON.stringify(state.patients))
-    const patientIndex = patients.findIndex(patient => {
-      return patient._id === patientID
-    })
-    if (patientIndex !== undefined) {
-      const scriptIndex = patients[patientIndex].scripts.findIndex(script => {
-        return script._id === payload._id
-      })
-      if (scriptIndex !== undefined) {
-        patients[patientIndex].scripts[scriptIndex] = payload
+    this.rxService.putRx(patientID, payload._id, payload).subscribe(resp => {
+      if (resp.status === 'success') {
+        ctx.patchState({
+          selectedPatient: resp.data
+        })
+        return ctx.dispatch(new GetPatients())
       } else {
-        throw new Error('not a valid RxID')
+        throw new Error('Unable to update RX')
       }
-    } else {
-      throw new Error('not a valid patientID')
-    }
-    ctx.patchState({
-      patients
     })
   }
 
   /* History */
 
+  @Action(AddHistory)
+  addHistory(ctx: StateContext<PortalStateModel>, {payload, patientID}: AddHistory) {
+    this.historyService.postHistory(patientID, payload).subscribe(resp => {
+      if (resp.status === 'success') {
+        ctx.patchState({
+          selectedPatient: resp.data
+        })
+        return ctx.dispatch(new GetPatients())
+      } else {
+        throw new Error('Unable to add med history')
+      }
+    })
+  }
+
+  @Action(RemoveHistory)
+  removeHistory(ctx: StateContext<PortalStateModel>, {payload, patientID}: RemoveHistory) {
+    this.historyService.deleteHistory(patientID, payload._id).subscribe(resp => {
+      if (resp) {
+        if (resp.status === 'success') {
+          ctx.patchState({
+            selectedPatient: resp.data
+          })
+          return ctx.dispatch(new GetPatients())
+        } else {
+          throw new Error('unable to remove med history')
+        }
+      }
+    })
+  }
+
+  @Action(UpdateHistory)
+  updateHistory(ctx: StateContext<PortalStateModel>, {payload, patientID}: UpdateHistory) {
+    this.historyService.putHistory(patientID, payload._id, payload).subscribe(resp => {
+      if (resp.status === 'success') {
+        ctx.patchState({
+          selectedPatient: resp.data
+        })
+        return ctx.dispatch(new GetPatients())
+      } else {
+        throw new Error('Unable to update med history')
+      }
+    })
+  }
+
   /* Allergy */
 
-  @Action(SetSelectedPatient)
-  setSelectedPatient(ctx: StateContext<PortalStateModel>, {payload}: SetSelectedPatient) {
-    ctx.patchState({
-      state: 'patient',
-      selectedPatient: payload
+  @Action(AddAllergy)
+  addAllergy(ctx: StateContext<PortalStateModel>, {payload, patientID}: AddAllergy) {
+    this.allergyService.postAllergy(patientID, payload).subscribe(resp => {
+      if (resp.status === 'success') {
+        ctx.patchState({
+          selectedPatient: resp.data
+        })
+        return ctx.dispatch(new GetPatients())
+      } else {
+        throw new Error('Unable to add Allergy')
+      }
+    })
+  }
+
+  @Action(RemoveAllergy)
+  removeAllergy(ctx: StateContext<PortalStateModel>, {payload, patientID}: RemoveAllergy) {
+    this.allergyService.deleteAllergy(patientID, payload._id).subscribe(resp => {
+      if (resp) {
+        if (resp.status === 'success') {
+          ctx.patchState({
+            selectedPatient: resp.data
+          })
+          return ctx.dispatch(new GetPatients())
+        } else {
+          throw new Error('unable to remove Allergy')
+        }
+      }
+    })
+  }
+
+  @Action(UpdateAllergy)
+  updateAllergy(ctx: StateContext<PortalStateModel>, {payload, patientID}: UpdateAllergy) {
+    this.allergyService.putAllergy(patientID, payload._id, payload).subscribe(resp => {
+      if (resp.status === 'success') {
+        ctx.patchState({
+          selectedPatient: resp.data
+        })
+        return ctx.dispatch(new GetPatients())
+      } else {
+        throw new Error('Unable to update Allergy')
+      }
     })
   }
 }

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core'
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core'
 import {PatientControl} from '../../models/Column'
 import {FormGroup} from '@angular/forms'
 
@@ -11,11 +11,11 @@ export class FormControlComponent implements OnInit {
   @Input() row: PatientControl
   @Input() form: FormGroup
 
-  constructor() {
+  constructor(private change: ChangeDetectorRef) {
   }
 
   ngOnInit() {
-    console.log(this.row)
+    this.change.markForCheck()
   }
 
 }

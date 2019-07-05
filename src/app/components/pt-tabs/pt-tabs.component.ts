@@ -6,6 +6,8 @@ import {MedicalHistory} from '../../models/MedicalHistory'
 import {Store} from '@ngxs/store'
 import {UpdatePatient} from '../../state/actions/patient.action'
 import {AddRx, RemoveRx, UpdateRx} from '../../state/actions/rx.action'
+import {AddHistory, RemoveHistory, UpdateHistory} from '../../state/actions/history.action'
+import {AddAllergy, RemoveAllergy, UpdateAllergy} from '../../state/actions/allergy.action'
 
 @Component({
   selector: 'app-pt-tabs',
@@ -28,8 +30,9 @@ export class PtTabsComponent implements OnInit {
   }
 
   changeNotes(notes: string) {
-    this.patient.notes = notes
-    this.store.dispatch(new UpdatePatient(this.patient))
+    const patient = JSON.parse(JSON.stringify(this.patient))
+    patient.notes = notes
+    this.store.dispatch(new UpdatePatient(patient))
   }
 
   addRx(prescriptions: Rx) {
@@ -44,14 +47,27 @@ export class PtTabsComponent implements OnInit {
     this.store.dispatch(new RemoveRx(prescriptions, this.patient._id))
   }
 
-
-  changeAllergies(allergies: Allergy[]) {
-    this.patient.allergies = allergies
-    this.store.dispatch(new UpdatePatient(this.patient))
+  addHistory(history: MedicalHistory) {
+    this.store.dispatch(new AddHistory(history, this.patient._id))
   }
 
-  changeHistory(history: MedicalHistory[]) {
-    this.patient.history = history
-    this.store.dispatch(new UpdatePatient(this.patient))
+  editHistory(history: MedicalHistory) {
+    this.store.dispatch(new UpdateHistory(history, this.patient._id))
+  }
+
+  deleteHistory(history: MedicalHistory) {
+    this.store.dispatch(new RemoveHistory(history, this.patient._id))
+  }
+
+  addAllergy(allergy: Allergy) {
+    this.store.dispatch(new AddAllergy(allergy, this.patient._id))
+  }
+
+  editAllergy(allergy: Allergy) {
+    this.store.dispatch(new UpdateAllergy(allergy, this.patient._id))
+  }
+
+  deleteAllergy(allergy: Allergy) {
+    this.store.dispatch(new RemoveAllergy(allergy, this.patient._id))
   }
 }

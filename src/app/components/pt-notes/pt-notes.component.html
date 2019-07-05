@@ -1,4 +1,4 @@
 <p-editor
-  (onTextChange)="edit()"
-  [(ngModel)]="notes"
+  (onTextChange)="notes$.next($event)"
+  [ngModel]="notes"
 ></p-editor>

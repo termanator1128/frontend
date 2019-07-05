@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core'
+import {PatientColumns} from '../../models/Column'
 
 @Component({
   selector: 'app-table',
@@ -7,7 +8,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core'
 })
 export class TableComponent implements OnInit {
   @Input() rows: any[]
-  @Input() cols: any[]
+  @Input() cols: PatientColumns[]
   @Input() tableTitle: string
   @Input() addRowButtonLabel: string
   @Input() addRowModalTitle: string

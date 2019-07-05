@@ -14,9 +14,11 @@
         tableTitle="Prescriptions"
       ></app-table>
     </p-tabPanel>
-    <!--<p-tabPanel header="Medical History" leftIcon="pi pi-user">
+    <p-tabPanel header="Medical History" leftIcon="pi pi-user">
       <app-table
-        (add)="changeHistory($event)"
+        (addRow)="addHistory($event)"
+        (deleteRow)="deleteHistory($event)"
+        (editRow)="editHistory($event)"
         *ngIf="activeTab === 1"
         [cols]="columns.history"
         [rows]="patient.history"
@@ -27,7 +29,9 @@
     </p-tabPanel>
     <p-tabPanel header="Allergies" leftIcon="pi pi-eye">
       <app-table
-        (updateRows)="changeAllergies($event)"
+        (addRow)="addAllergy($event)"
+        (deleteRow)="deleteAllergy($event)"
+        (editRow)="editAllergy($event)"
         *ngIf="activeTab === 2"
         [cols]="columns.allergy"
         [rows]="patient.allergies"
@@ -35,7 +39,7 @@
         tableTitle="Allergies"
         addRowModalTitle="Edit Allergy"
       ></app-table>
-    </p-tabPanel>-->
+    </p-tabPanel>
     <p-tabPanel header="Other Notes" leftIcon="pi pi-pencil">
       <app-pt-notes
         *ngIf="activeTab === 3"
