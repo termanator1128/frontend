@@ -1,0 +1,52 @@
+import {Component, OnInit} from '@angular/core'
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms'
+import {AuthService} from '../../services/auth.service'
+import {MessageService} from 'primeng/api'
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
+  providers: [MessageService]
+})
+export class LoginComponent implements OnInit {
+  form: FormGroup
+
+  constructor(private formBuilder: FormBuilder,
+              private auth: AuthService,
+              private messageService: MessageService) {
+  }
+
+  ngOnInit() {
+    this.form = this.formBuilder.group({
+      username: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required),
+    })
+    console.log(this.form)
+  }
+
+  submit() {
+    const $auth = this.auth.authenticate(this.form.controls.username.value, this.form.controls.password.value)
+    $auth.subscribe(
+      resp => (
+        this.checkAuth(resp)
+      ),
+      error => (
+        this.failedAuth()
+      )
+    )
+  }
+
+  failedAuth() {
+    this.messageService.add({key: 'tc', severity: 'error', summary: 'Login Failed', detail: 'Username and/or password incorrect'})
+    this.form.controls.password.reset()
+  }
+
+  checkAuth(resp) {
+    if (resp.token) {
+      this.auth.saveToken(resp.token)
+    } else {
+      this.failedAuth()
+    }
+  }
+}

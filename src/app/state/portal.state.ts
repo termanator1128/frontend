@@ -1,4 +1,4 @@
-import {Action, NgxsOnInit, Selector, State, StateContext} from '@ngxs/store'
+import {Action, Selector, State, StateContext} from '@ngxs/store'
 import {AddRx, RemoveRx, UpdateRx} from './actions/rx.action'
 import {AddPatient, GetPatients, RemovePatient, UpdatePatient} from './actions/patient.action'
 import {Patient} from '../models/Patient'
@@ -11,6 +11,7 @@ import {HistoryService} from '../services/history.service'
 import {AllergyService} from '../services/allergy.service'
 import {AddHistory, RemoveHistory, UpdateHistory} from './actions/history.action'
 import {AddAllergy, RemoveAllergy, UpdateAllergy} from './actions/allergy.action'
+import {AuthService} from '../services/auth.service'
 
 const columns: PatientColumns = {
   rx: [
@@ -59,12 +60,13 @@ export class PortalStateModel {
   }
 })
 
-export class PortalState implements NgxsOnInit {
+export class PortalState {
   constructor(
     private patientService: PatientService,
     private rxService: RxService,
     private historyService: HistoryService,
-    private allergyService: AllergyService
+    private allergyService: AllergyService,
+    private auth: AuthService
   ) {
   }
 
@@ -86,10 +88,6 @@ export class PortalState implements NgxsOnInit {
   @Selector()
   static getSelectedPatient(state: PortalStateModel) {
     return state.selectedPatient
-  }
-
-  ngxsOnInit(ctx: StateContext<PortalStateModel>) {
-    return ctx.dispatch(new GetPatients())
   }
 
   @Action(GetPatients)

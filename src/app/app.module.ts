@@ -1,7 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser'
 import {NgModule} from '@angular/core'
-
-import {AppRoutingModule} from './app-routing.module'
 import {AppComponent} from './app.component'
 import {TableModule} from 'primeng/table'
 import {DialogModule} from 'primeng/dialog'
@@ -15,7 +13,11 @@ import {
   EditorModule,
   FieldsetModule,
   InputMaskModule,
+  InputTextModule,
   KeyFilterModule,
+  MessageModule,
+  MessagesModule,
+  PasswordModule,
   RadioButtonModule,
   TabViewModule
 } from 'primeng/primeng'
@@ -33,9 +35,27 @@ import {NewPatientComponent} from './components/new-patient/new-patient.componen
 import {environment} from '../environments/environment'
 import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin'
 import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin'
-import {HttpClientModule} from '@angular/common/http'
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http'
 import {FormControlComponent} from './components/form-control/form-control.component'
 import {SaveControllerComponent} from './components/save-controller/save-controller.component'
+import {LoginComponent} from './components/login/login.component'
+import {RouterModule, Routes} from '@angular/router'
+import {AuthGuardService} from './services/auth-guard.service'
+import {MainComponent} from './components/main/main.component'
+import {AuthService} from './services/auth.service'
+import {JWT_OPTIONS, JwtHelperService} from '@auth0/angular-jwt'
+import {CookieService} from 'ngx-cookie-service'
+import {ToastModule} from 'primeng/toast'
+import {JwtInterceptor} from './services/jwt.interceptor'
+
+const routes: Routes = [
+  {path: 'login', component: LoginComponent},
+  {
+    path: '**',
+    component: MainComponent,
+    canActivate: [AuthGuardService]
+  }
+]
 
 @NgModule({
   declarations: [
@@ -50,10 +70,11 @@ import {SaveControllerComponent} from './components/save-controller/save-control
     NewPatientComponent,
     FormControlComponent,
     SaveControllerComponent,
+    LoginComponent,
+    MainComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     TableModule,
     DialogModule,
     FormsModule,
@@ -75,10 +96,25 @@ import {SaveControllerComponent} from './components/save-controller/save-control
     EditorModule,
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot(),
-    HttpClientModule
+    PasswordModule,
+    HttpClientModule,
+    [RouterModule.forRoot(routes)],
+    InputTextModule,
+    MessagesModule,
+    MessageModule,
+    ToastModule
+
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    AuthGuardService,
+    AuthService,
+    {provide: JWT_OPTIONS, useValue: JWT_OPTIONS},
+    JwtHelperService,
+    CookieService
+  ],
+  bootstrap: [AppComponent],
+  exports: [RouterModule]
 })
 export class AppModule {
 }

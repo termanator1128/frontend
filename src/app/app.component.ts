@@ -1,10 +1,4 @@
 import {Component} from '@angular/core'
-import {Patient} from './models/Patient'
-import {Observable} from 'rxjs'
-import {PortalState} from './state/portal.state'
-import {Select, Store} from '@ngxs/store'
-import {SetSelectedPatient, SetState} from './state/actions/state.action'
-import {AddPatient} from './state/actions/patient.action'
 
 @Component({
   selector: 'app-root',
@@ -12,28 +6,6 @@ import {AddPatient} from './state/actions/patient.action'
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  @Select(PortalState.getSelectedPatient) selectedPatient$: Observable<Patient>
-  @Select(PortalState.getPatients) patients$: Observable<Array<Patient>>
-  @Select(PortalState.getState) state$: Observable<'landing' | 'patient' | 'new'>
-  @Select(PortalState.getColumns) columns$: Observable<any>
-
-  constructor(private store: Store) {
-  }
-
-  setNewPatientState() {
-    this.store.dispatch(new SetState('new'))
-  }
-
-  patientSelect(patient: Patient) {
-    this.store.dispatch(new SetSelectedPatient(patient))
-  }
-
-  saveNewPatient(patient: Patient) {
-    this.store.dispatch(new AddPatient(patient))
-    this.hide()
-  }
-
-  hide() {
-    this.store.dispatch(new SetState('landing'))
+  constructor() {
   }
 }

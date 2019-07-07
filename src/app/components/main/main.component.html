@@ -1,0 +1,29 @@
+<div class="all-but-footer">
+  <app-main-search
+    (createNew)="setNewPatientState()"
+    (selectPatient)="patientSelect($event)"
+    [patients]="patients$ | async"
+  ></app-main-search>
+  <div *ngIf="columns$ | async as columns" [ngSwitch]="state$ | async" class="content">
+    <div *ngSwitchCase="'patient'">
+      <app-pt-page
+        *ngIf="selectedPatient$ | async as selectedPatient"
+        [columns]="columns"
+        [patient]="selectedPatient"
+      ></app-pt-page>
+    </div>
+    <div *ngSwitchCase="'new'">
+      <app-new-patient
+        (addRow)="saveNewPatient($event)"
+        (closeDialog)="hide()"
+        [cols]="columns.details"
+      ></app-new-patient>
+    </div>
+    <div *ngSwitchDefault class="placeholder-div">
+      <img alt="here" class="placeholder" src="../../assets/star.png">
+    </div>
+  </div>
+</div>
+<footer class="footer">
+  <a class="source-code" href="https://github.com/aleinin/bbrp-patient-portal">Source Code | Created By Aleinin</a>
+</footer>

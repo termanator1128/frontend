@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core'
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators'
-import {EMPTY, Subject, Subscription} from 'rxjs'
+import {EMPTY, Subject} from 'rxjs'
 
 @Component({
   selector: 'app-pt-notes',
@@ -11,7 +11,7 @@ export class PtNotesComponent implements OnDestroy {
   @Input() notes: string
   @Output() notesEdit: EventEmitter<string> = new EventEmitter()
   notes$ = new Subject<any>()
-  private notesSub: Subscription
+  private notesSub
 
   constructor() {
     this.notesSub = this.notes$.pipe(

@@ -4,7 +4,7 @@ import {Patient} from '../models/Patient'
 import {Observable} from 'rxjs'
 import {Response} from '../models/Response'
 
-export const baseUrl = 'http://localhost:8080/api'
+export const baseUrl = 'http://portal.aleinin.com/api'
 
 @Injectable({
   providedIn: 'root'

@@ -1,0 +1,33 @@
+<p-toast [style]="{marginTop: '80px'}" key="tc" position="top-right"></p-toast>
+<div class="all-but-footer">
+  <div class="banner">
+    <div class="components">
+      <div class="top">
+        <h1 class="title">Patient Portal</h1>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <h2>Login</h2>
+      <div>
+
+      </div>
+      <span class="ui-float-label">
+        <input formControlName="username" id="float-input" type="text" size="30" pInputText>
+        <label for="float-input">Username</label>
+      </span>
+      <span class="ui-float-label">
+        <input formControlName="password" id="float-password" [feedback]="false" pPassword size="30" type="password"/>
+        <label for="float-input">Password</label>
+      </span>
+      <div class="submit-btn-div">
+        <button class="submit-btn" label="Submit" pButton type="submit"
+                [disabled]="!(form.dirty && form.valid)"></button>
+      </div>
+    </form>
+  </div>
+</div>
+<footer class="footer">
+  <a class="source-code" href="https://github.com/aleinin/bbrp-patient-portal">Source Code | Created By Aleinin</a>
+</footer>
