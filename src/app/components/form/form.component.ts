@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core'
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms'
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms'
 import {PatientColumns} from '../../models/Column'
 
 @Component({
@@ -13,6 +13,7 @@ export class FormComponent implements OnInit, OnChanges {
   @Input() new: boolean
   @Input() cols
   @Input() headerTitle
+  @Input() forbiddenNames: Array<string>
   @Output() addRow: EventEmitter<any> = new EventEmitter()
   @Output() editRow: EventEmitter<any> = new EventEmitter()
   @Output() deleteRow: EventEmitter<any> = new EventEmitter()
@@ -23,7 +24,6 @@ export class FormComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-
   }
 
   createForm(): any {
@@ -31,11 +31,21 @@ export class FormComponent implements OnInit, OnChanges {
     this.form = this.formBuilder.group({})
     for (const key in cols) {
       if (cols.hasOwnProperty(key)) {
+        const column = cols[key]
+        const validators = []
+        if (column.required) {
+          validators.push(Validators.required)
+        }
+        if (column.controlName === 'name') {
+          validators.push(this.noForbiddenNames.bind(this))
+        }
+        if (column.type === 'date') {
+          validators.push(this.validateDate.bind(this))
+        }
         if (!this.row) {
-          this.form.addControl(cols[key], new FormControl(undefined))
+          this.form.addControl(cols[key], new FormControl(undefined, validators))
         } else {
-          this.form.addControl(cols[key].controlName, new FormControl(this.row[cols[key].controlName],
-            cols[key].required ? Validators.required : null))
+          this.form.addControl(cols[key].controlName, new FormControl(this.row[cols[key].controlName], validators))
         }
       }
     }
@@ -75,6 +85,15 @@ export class FormComponent implements OnInit, OnChanges {
   hide() {
     this.collectFormData()
     this.closeDialog.emit()
+  }
+
+  noForbiddenNames(control: AbstractControl): { noForbiddenNames: boolean } | null {
+    return (this.forbiddenNames.includes(control.value) && control.value !== this.row.name) ? {noForbiddenNames: true} : null
+  }
+
+  validateDate(control: AbstractControl): { validateDate: true } | null {
+    const dateRegex = /^(0?[1-9]|1[0-2])\/(0?[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/
+    return !dateRegex.test(control.value) ? {validateDate: true} : null
   }
 
 }

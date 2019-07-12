@@ -1,5 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core'
 import {PatientColumns} from '../../models/Column'
+import {Select} from '@ngxs/store'
+import {PortalState} from '../../state/portal.state'
+import {Observable} from 'rxjs'
 
 @Component({
   selector: 'app-table',
@@ -15,6 +18,7 @@ export class TableComponent implements OnInit {
   @Output() addRow: EventEmitter<any> = new EventEmitter()
   @Output() editRow: EventEmitter<any> = new EventEmitter()
   @Output() deleteRow: EventEmitter<any> = new EventEmitter()
+  @Select(PortalState.getPatientNames) patientNames$: Observable<Array<string>>
   selectedRow: any
   visible = false
   new: boolean

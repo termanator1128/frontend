@@ -4,7 +4,7 @@ import {Patient} from '../models/Patient'
 import {Observable} from 'rxjs'
 import {Response} from '../models/Response'
 
-export const baseUrl = 'http://portal.aleinin.com/api'
+export const baseUrl = 'https://portal.aleinin.com/api'
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +15,8 @@ export class PatientService {
   }
 
   /* Patient */
-  getPatients(): Observable<{ data: Patient[] }> {
-    return this.http.get<{ data: Patient[] }>(`${baseUrl}/patients`)
+  getPatients(): Observable<Response> {
+    return this.http.get<Response>(`${baseUrl}/patients`)
   }
 
   postPatient(patient: Patient): Observable<Response> {

@@ -4,6 +4,7 @@
   [cols]="cols"
   [display]="true"
   [headerTitle]="'New Patient'"
+  [forbiddenNames]="patientNames$ | async"
   [new]="true"
   [row]="{}"
 ></app-form>

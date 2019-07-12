@@ -1,5 +1,8 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core'
 import {Patient} from '../../models/Patient'
+import {Select} from '@ngxs/store'
+import {PortalState} from '../../state/portal.state'
+import {Observable} from 'rxjs'
 
 @Component({
   selector: 'app-new-patient',
@@ -10,6 +13,7 @@ export class NewPatientComponent {
   @Input() cols
   @Output() addRow: EventEmitter<any> = new EventEmitter()
   @Output() closeDialog: EventEmitter<any> = new EventEmitter()
+  @Select(PortalState.getPatientNames) patientNames$: Observable<Array<string>>
 
   constructor() {
   }

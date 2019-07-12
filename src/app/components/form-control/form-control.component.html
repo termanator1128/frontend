@@ -1,25 +1,26 @@
 <div [ngSwitch]="row.type">
   <form [formGroup]="form">
     <div *ngSwitchCase="'date'" class="ui-g-12">
+      <p *ngIf="form.get(row.controlName).errors?.validateDate" class="error">mm/dd/yyyy</p>
       <div class="ui-g-4">
-        {{row.label}} <span *ngIf="row.required" class="required">*</span>
+        <p>{{row.label}}&nbsp;<span *ngIf="row.required" class="required">*</span></p>
       </div>
-      <div>
-        <input [formControlName]="row.controlName" [id]="row.controlName" pInputText/>
+      <div class="ui-g-8">
+        <input [formControlName]="row.controlName" [id]="row.controlName" [placeholder]="row.hint" pInputText/>
       </div>
     </div>
     <div *ngSwitchCase="'number'" class="ui-g-12">
       <div class="ui-g-4">
-        {{row.label}} <span *ngIf="row.required" class="required">*</span>
+        <p>{{row.label}}&nbsp;<span *ngIf="row.required" class="required">*</span></p>
       </div>
       <div class="ui-g-8">
-        <input [formControlName]="row.controlName" pInputText pKeyFilter="int" placeholder="Enter a number..."
+        <input [formControlName]="row.controlName" [placeholder]="row.hint" pInputText pKeyFilter="int"
                type="text">
       </div>
     </div>
     <div *ngSwitchCase="'sex'" class="ui-g-12">
       <div class="ui-g-4">
-        {{row.label}} <span *ngIf="row.required" class="required">*</span>
+        <p>{{row.label}}&nbsp;<span *ngIf="row.required" class="required">*</span></p>
       </div>
       <div class="ui-g">
         <div class="ui-g-12">
@@ -32,12 +33,15 @@
         </div>
       </div>
     </div>
+
     <div *ngSwitchDefault class="ui-g-12">
+      <p *ngIf="row.controlName ==='name' && form.get(row.controlName).errors?.noForbiddenNames" class="error">That
+        patient already exists</p>
       <div class="ui-g-4">
-        {{row.label}} <span *ngIf="row.required" class="required">*</span>
+        <p>{{row.label}}&nbsp;<span *ngIf="row.required" class="required">*</span></p>
       </div>
       <div class="ui-g-8">
-        <input [formControlName]="row.controlName" [id]="row.controlName" pInputText/>
+        <input [formControlName]="row.controlName" [id]="row.controlName" [placeholder]="row.hint" pInputText/>
       </div>
     </div>
   </form>

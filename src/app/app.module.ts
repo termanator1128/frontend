@@ -34,7 +34,6 @@ import {PortalState} from './state/portal.state'
 import {NewPatientComponent} from './components/new-patient/new-patient.component'
 import {environment} from '../environments/environment'
 import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin'
-import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin'
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http'
 import {FormControlComponent} from './components/form-control/form-control.component'
 import {SaveControllerComponent} from './components/save-controller/save-controller.component'
@@ -95,7 +94,6 @@ const routes: Routes = [
     ], {developmentMode: !environment.production}),
     EditorModule,
     NgxsReduxDevtoolsPluginModule.forRoot(),
-    NgxsLoggerPluginModule.forRoot(),
     PasswordModule,
     HttpClientModule,
     [RouterModule.forRoot(routes)],

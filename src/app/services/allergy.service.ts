@@ -17,8 +17,8 @@ export class AllergyService {
     return this.http.post<Response>(`${baseUrl}/patients/${patientID}/allergies/`, allergy)
   }
 
-  deleteAllergy(patientID: string, allergyID: string): Observable<any> {
-    return this.http.delete(`${baseUrl}/patients/${patientID}/allergies/${allergyID}/`)
+  deleteAllergy(patientID: string, allergyID: string): Observable<Response> {
+    return this.http.delete<Response>(`${baseUrl}/patients/${patientID}/allergies/${allergyID}/`)
   }
 
   putAllergy(patientID: string, allergyID: string, allergy: Allergy): Observable<Response> {

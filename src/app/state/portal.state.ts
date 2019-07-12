@@ -15,29 +15,29 @@ import {AuthService} from '../services/auth.service'
 
 const columns: PatientColumns = {
   rx: [
-    {controlName: 'date', type: 'date', label: 'Prescribed on', required: true},
-    {controlName: 'drug', type: 'text', label: 'Drug', required: true},
-    {controlName: 'dosage', type: 'text', label: 'Dosage', required: true},
-    {controlName: 'reason', type: 'text', label: 'Reason for taking', required: true},
-    {controlName: 'prescriber', type: 'text', label: 'Prescribed by', required: true}
+    {controlName: 'date', type: 'date', label: 'Prescribed on', required: true, hint: 'mm/dd/yyyy'},
+    {controlName: 'drug', type: 'text', label: 'Drug', required: true, hint: 'Drug name'},
+    {controlName: 'dosage', type: 'text', label: 'Dosage', required: true, hint: '100mg'},
+    {controlName: 'reason', type: 'text', label: 'Reason for taking', required: true, hint: 'Pain'},
+    {controlName: 'prescriber', type: 'text', label: 'Prescribed by', required: true, hint: 'Name, rank'}
   ],
   history: [
-    {controlName: 'date', type: 'date', label: 'Onset', required: true},
-    {controlName: 'diagnosis', type: 'text', label: 'Diagnosis', required: true},
-    {controlName: 'diagnoser', type: 'text', label: 'Diagnosed by', required: true}
+    {controlName: 'date', type: 'date', label: 'Onset', required: true, hint: 'mm/dd/yyyy'},
+    {controlName: 'diagnosis', type: 'text', label: 'Diagnosis', required: true, hint: 'Concussion'},
+    {controlName: 'diagnoser', type: 'text', label: 'Diagnosed by', required: true, hint: 'Name, rank'}
   ],
   allergy: [
-    {controlName: 'allergy', type: 'text', label: 'Allergy', required: true},
-    {controlName: 'reaction', type: 'text', label: 'Reaction', required: true},
-    {controlName: 'severity', type: 'text', label: 'Severity', required: true}
+    {controlName: 'allergy', type: 'text', label: 'Allergy', required: true, hint: 'Penicillin'},
+    {controlName: 'reaction', type: 'text', label: 'Reaction', required: true, hint: 'Hives'},
+    {controlName: 'severity', type: 'text', label: 'Severity', required: true, hint: 'Mild/Moderate/Severe'}
   ],
   details: [
-    {controlName: 'name', type: 'text', label: 'Name', required: true},
-    {controlName: 'age', type: 'number', label: 'Age', required: true},
-    {controlName: 'sex', type: 'sex', label: 'Sex', required: true},
-    {controlName: 'pronouns', type: 'text', label: 'Pronouns', required: false},
-    {controlName: 'dob', type: 'date', label: 'DOB', required: true},
-    {controlName: 'address', type: 'text', label: 'Address', required: false}
+    {controlName: 'name', type: 'text', label: 'Name', required: true, hint: 'Full name'},
+    {controlName: 'age', type: 'number', label: 'Age', required: true, hint: 'Age in years'},
+    {controlName: 'sex', type: 'sex', label: 'Sex', required: true, hint: 'n/a'},
+    {controlName: 'pronouns', type: 'text', label: 'Pronouns', required: false, hint: 'She/her'},
+    {controlName: 'dob', type: 'date', label: 'DOB', required: true, hint: 'mm/dd/yyyy'},
+    {controlName: 'address', type: 'text', label: 'Address', required: false, hint: '45 West Broadway'}
   ]
 }
 
@@ -47,6 +47,7 @@ export class PortalStateModel {
   state: 'landing' | 'new' | 'patient'
   selectedPatient: Patient
   scripts: Rx[]
+  patientNames: Array<string>
 }
 
 @State<PortalStateModel>({
@@ -56,7 +57,8 @@ export class PortalStateModel {
     columns,
     state: 'landing',
     selectedPatient: undefined,
-    scripts: []
+    scripts: [],
+    patientNames: []
   }
 })
 
@@ -90,12 +92,23 @@ export class PortalState {
     return state.selectedPatient
   }
 
+  @Selector()
+  static getPatientNames(state: PortalStateModel) {
+    return state.patientNames
+  }
+
   @Action(GetPatients)
   getPatients(ctx: StateContext<PortalStateModel>, {}: SetState) {
-    this.patientService.getPatients().subscribe(resp => {
-      ctx.patchState({
-        patients: resp.data
-      })
+    this.patientService.getPatients().subscribe((resp) => {
+      if (resp.success) {
+
+        ctx.patchState({
+          patients: resp.data,
+          patientNames: resp.data.map(patient => patient.info.name)
+        })
+      } else {
+        this.auth.deleteToken()
+      }
     })
   }
 
@@ -119,7 +132,6 @@ export class PortalState {
   /* Patient */
   @Action(AddPatient)
   addPatient(ctx: StateContext<PortalStateModel>, {payload}: AddPatient) {
-    console.log('made it')
     const state = ctx.getState()
     this.patientService.postPatient(payload).subscribe(resp => {
       const patient: Patient = resp.data
@@ -134,7 +146,7 @@ export class PortalState {
   @Action(RemovePatient)
   removePatient(ctx: StateContext<PortalStateModel>, {payload}: RemovePatient) {
     this.patientService.deletePatient(payload._id).subscribe(resp => {
-      if (resp.status === 'success') {
+      if (resp.success) {
         ctx.patchState({
           patients: ctx.getState().patients.filter(a => a._id !== payload._id),
           state: 'landing',
@@ -149,7 +161,7 @@ export class PortalState {
   @Action(UpdatePatient)
   updatePatient(ctx: StateContext<PortalStateModel>, {payload}: UpdatePatient) {
     this.patientService.putPatient(payload._id, payload).subscribe(resp => {
-      if (resp.status === 'success') {
+      if (resp.success) {
         ctx.patchState({
           selectedPatient: resp.data
         })
@@ -164,7 +176,7 @@ export class PortalState {
   @Action(AddRx)
   addRx(ctx: StateContext<PortalStateModel>, {payload, patientID}: AddRx) {
     this.rxService.postRx(patientID, payload).subscribe(resp => {
-      if (resp.status === 'success') {
+      if (resp.success) {
         ctx.patchState({
           selectedPatient: resp.data
         })
@@ -179,14 +191,13 @@ export class PortalState {
   removeRx(ctx: StateContext<PortalStateModel>, {payload, patientID}: RemoveRx) {
     this.rxService.deleteRx(patientID, payload._id).subscribe(resp => {
       if (resp) {
-        console.log(resp)
-        if (resp.status === 'success') {
+        if (resp.success) {
           ctx.patchState({
             selectedPatient: resp.data
           })
           return ctx.dispatch(new GetPatients())
         } else {
-          throw new Error(resp.status)
+          throw new Error(resp.message)
         }
       }
     })
@@ -195,7 +206,7 @@ export class PortalState {
   @Action(UpdateRx)
   updateRx(ctx: StateContext<PortalStateModel>, {payload, patientID}: UpdateRx) {
     this.rxService.putRx(patientID, payload._id, payload).subscribe(resp => {
-      if (resp.status === 'success') {
+      if (resp.success) {
         ctx.patchState({
           selectedPatient: resp.data
         })
@@ -211,7 +222,7 @@ export class PortalState {
   @Action(AddHistory)
   addHistory(ctx: StateContext<PortalStateModel>, {payload, patientID}: AddHistory) {
     this.historyService.postHistory(patientID, payload).subscribe(resp => {
-      if (resp.status === 'success') {
+      if (resp.success) {
         ctx.patchState({
           selectedPatient: resp.data
         })
@@ -226,7 +237,7 @@ export class PortalState {
   removeHistory(ctx: StateContext<PortalStateModel>, {payload, patientID}: RemoveHistory) {
     this.historyService.deleteHistory(patientID, payload._id).subscribe(resp => {
       if (resp) {
-        if (resp.status === 'success') {
+        if (resp.success) {
           ctx.patchState({
             selectedPatient: resp.data
           })
@@ -241,7 +252,7 @@ export class PortalState {
   @Action(UpdateHistory)
   updateHistory(ctx: StateContext<PortalStateModel>, {payload, patientID}: UpdateHistory) {
     this.historyService.putHistory(patientID, payload._id, payload).subscribe(resp => {
-      if (resp.status === 'success') {
+      if (resp.success) {
         ctx.patchState({
           selectedPatient: resp.data
         })
@@ -257,7 +268,7 @@ export class PortalState {
   @Action(AddAllergy)
   addAllergy(ctx: StateContext<PortalStateModel>, {payload, patientID}: AddAllergy) {
     this.allergyService.postAllergy(patientID, payload).subscribe(resp => {
-      if (resp.status === 'success') {
+      if (resp.success) {
         ctx.patchState({
           selectedPatient: resp.data
         })
@@ -272,7 +283,7 @@ export class PortalState {
   removeAllergy(ctx: StateContext<PortalStateModel>, {payload, patientID}: RemoveAllergy) {
     this.allergyService.deleteAllergy(patientID, payload._id).subscribe(resp => {
       if (resp) {
-        if (resp.status === 'success') {
+        if (resp.success) {
           ctx.patchState({
             selectedPatient: resp.data
           })
@@ -287,7 +298,7 @@ export class PortalState {
   @Action(UpdateAllergy)
   updateAllergy(ctx: StateContext<PortalStateModel>, {payload, patientID}: UpdateAllergy) {
     this.allergyService.putAllergy(patientID, payload._id, payload).subscribe(resp => {
-      if (resp.status === 'success') {
+      if (resp.success) {
         ctx.patchState({
           selectedPatient: resp.data
         })

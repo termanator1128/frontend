@@ -17,8 +17,8 @@ export class RxService {
     return this.http.post<Response>(`${baseUrl}/patients/${patientID}/scripts/`, rx)
   }
 
-  deleteRx(patientID: string, scriptID: string): Observable<any> {
-    return this.http.delete(`${baseUrl}/patients/${patientID}/scripts/${scriptID}/`)
+  deleteRx(patientID: string, scriptID: string): Observable<Response> {
+    return this.http.delete<Response>(`${baseUrl}/patients/${patientID}/scripts/${scriptID}/`)
   }
 
   putRx(patientID: string, scriptID: string, rx: Rx): Observable<Response> {

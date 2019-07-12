@@ -17,8 +17,8 @@ export class HistoryService {
     return this.http.post<Response>(`${baseUrl}/patients/${patientID}/history/`, medHist)
   }
 
-  deleteHistory(patientID: string, historyID: string): Observable<any> {
-    return this.http.delete(`${baseUrl}/patients/${patientID}/history/${historyID}/`)
+  deleteHistory(patientID: string, historyID: string): Observable<Response> {
+    return this.http.delete<Response>(`${baseUrl}/patients/${patientID}/history/${historyID}/`)
   }
 
   putHistory(patientID: string, historyID: string, medHist: MedicalHistory): Observable<Response> {

@@ -3,6 +3,7 @@ export interface PatientControl {
   required: boolean
   label: string
   type: string
+  hint: string
 }
 
 export interface PatientColumns {

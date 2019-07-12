@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core'
+import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core'
 import {Patient} from '../../models/Patient'
 
 @Component({
@@ -6,10 +6,10 @@ import {Patient} from '../../models/Patient'
   templateUrl: './main-search.component.html',
   styleUrls: ['./main-search.component.scss']
 })
-export class MainSearchComponent implements OnInit {
+export class MainSearchComponent implements OnChanges {
   @Input() patients: Patient[]
   input: any
-  filteredPatients: any[]
+  filteredPatients: Patient[]
   @Output() selectPatient: EventEmitter<any> = new EventEmitter()
   @Output() createNew: EventEmitter<any> = new EventEmitter()
 
@@ -21,16 +21,14 @@ export class MainSearchComponent implements OnInit {
     this.filteredPatients = this.filterPatient(query, this.patients)
   }
 
-  filterPatient(query, patients: any[]): any[] {
-    // in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
+  filterPatient(query, patients: Patient[]): Patient[] {
     const filtered: any[] = []
-    for (let i = 0; i < patients.length; i++) {
-      const patient = patients[i]
+    for (const patient of patients) {
       if (patient.info.name.toLowerCase().indexOf(query.toLowerCase()) === 0) {
         filtered.push(patient)
       }
     }
-    if (filtered.length === 1) {
+    if (filtered.length === 1 && filtered[0].info.name === this.input) {
       this.selectPatient.emit(filtered[0])
     }
     return filtered
@@ -40,11 +38,11 @@ export class MainSearchComponent implements OnInit {
     this.selectPatient.emit(this.input)
   }
 
-  ngOnInit() {
+  ngOnChanges() {
   }
 
   newPatient() {
+    this.input = ''
     this.createNew.emit()
   }
-
 }

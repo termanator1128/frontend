@@ -1,6 +1,6 @@
-import {Component} from '@angular/core'
+import {Component, OnInit} from '@angular/core'
 import {PortalState} from '../../state/portal.state'
-import {AddPatient} from '../../state/actions/patient.action'
+import {AddPatient, GetPatients} from '../../state/actions/patient.action'
 import {Select, Store} from '@ngxs/store'
 import {Patient} from '../../models/Patient'
 import {SetSelectedPatient, SetState} from '../../state/actions/state.action'
@@ -11,7 +11,7 @@ import {Observable} from 'rxjs'
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
-export class MainComponent {
+export class MainComponent implements OnInit {
 
   @Select(PortalState.getSelectedPatient) selectedPatient$: Observable<Patient>
   @Select(PortalState.getPatients) patients$: Observable<Array<Patient>>
@@ -19,6 +19,10 @@ export class MainComponent {
   @Select(PortalState.getColumns) columns$: Observable<any>
 
   constructor(private store: Store) {
+  }
+
+  ngOnInit(): void {
+    this.store.dispatch(new GetPatients())
   }
 
   setNewPatientState() {
