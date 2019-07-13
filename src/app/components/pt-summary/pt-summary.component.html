@@ -1,30 +1,28 @@
-<p-card [header]="info.name">
+<p-card>
+  <div class="info-title">
+    <h2>{{info.name}}</h2>
+    <p-button (click)="show()" label="Edit"></p-button>
+  </div>
   <div class="pt-sum">
     <div>
       <img alt="logo" class="pt-pic" src="../../../assets/noimg.jpg">
     </div>
     <div class="pt-info-and-edit">
-      <div>
         <h3>Patient Summary</h3>
-        <div>
-          <ul class="pt-sum-info">
-            <li><b>Age:</b> {{info.age}}</li>
-            <li><b>Sex:</b> {{info.sex}}</li>
-            <li><b>Pronouns:</b> {{info.pronouns}}</li>
-            <li><b>DOB:</b> {{info.dob}}</li>
-            <li><b>Address:</b> {{info.address}}</li>
-          </ul>
-        </div>
-      </div>
-      <div>
-        <p-button (click)="show()" label="Edit"></p-button>
-      </div>
+      <ul class="pt-sum-info">
+        <li><b>Age:</b> {{info.age}}</li>
+        <li><b>Sex:</b> {{info.sex}}</li>
+        <li><b>Pronouns:</b> {{info.pronouns}}</li>
+        <li><b>DOB:</b> {{info.dob}}</li>
+        <li><b>Address:</b> {{info.address}}</li>
+      </ul>
     </div>
   </div>
 </p-card>
 <app-form
   *ngIf="display"
   [new]="false"
+  [isPatient]="true"
   [cols]="columns"
   [display]="display"
   [row]="info"

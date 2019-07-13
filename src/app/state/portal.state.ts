@@ -3,7 +3,6 @@ import {AddRx, RemoveRx, UpdateRx} from './actions/rx.action'
 import {AddPatient, GetPatients, RemovePatient, UpdatePatient} from './actions/patient.action'
 import {Patient} from '../models/Patient'
 import {SetSelectedPatient, SetState} from './actions/state.action'
-import {Rx} from '../models/Rx'
 import {PatientService} from '../services/patient.service'
 import {PatientColumns} from '../models/Column'
 import {RxService} from '../services/rx.service'
@@ -46,7 +45,6 @@ export class PortalStateModel {
   columns: {}
   state: 'landing' | 'new' | 'patient'
   selectedPatient: Patient
-  scripts: Rx[]
   patientNames: Array<string>
 }
 
@@ -57,7 +55,6 @@ export class PortalStateModel {
     columns,
     state: 'landing',
     selectedPatient: undefined,
-    scripts: [],
     patientNames: []
   }
 })

@@ -2,17 +2,45 @@
   background-image: linear-gradient(#1368d8 1%, #0f51a9 100%);
   display: flex;
   justify-content: center;
-  padding-bottom: 20px;
 }
+
+.search-button {
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
+  @media screen and (max-width: 600px) {
+    width: 100%;
+  }
+  @media screen and (min-width: 600px) and (max-width: 1200px) {
+    width: 75%;
+  }
+  @media screen and (min-width: 1200px) {
+    width: 50%;
+  }
+}
+
+.new-patient {
+  white-space: nowrap
+}
+
 
 .title {
   display: flex;
   justify-content: center;
   color: white;
-  font-family: Arial
+  font-family: Arial;
 }
 
 .search {
   border-radius: 15px;
-  padding: 10px;
+  width: 100%;
+}
+
+div {
+  position: relative;
+  width: 100%;
 }

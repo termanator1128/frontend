@@ -100,8 +100,7 @@ const routes: Routes = [
     InputTextModule,
     MessagesModule,
     MessageModule,
-    ToastModule
-
+    ToastModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
@@ -109,7 +108,7 @@ const routes: Routes = [
     AuthService,
     {provide: JWT_OPTIONS, useValue: JWT_OPTIONS},
     JwtHelperService,
-    CookieService
+    CookieService,
   ],
   bootstrap: [AppComponent],
   exports: [RouterModule]

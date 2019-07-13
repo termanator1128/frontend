@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core'
+import {Component, EventEmitter, Input, Output} from '@angular/core'
 import {Patient} from '../../models/Patient'
 
 @Component({
@@ -6,7 +6,7 @@ import {Patient} from '../../models/Patient'
   templateUrl: './main-search.component.html',
   styleUrls: ['./main-search.component.scss']
 })
-export class MainSearchComponent implements OnChanges {
+export class MainSearchComponent {
   @Input() patients: Patient[]
   input: any
   filteredPatients: Patient[]
@@ -30,15 +30,14 @@ export class MainSearchComponent implements OnChanges {
     }
     if (filtered.length === 1 && filtered[0].info.name === this.input) {
       this.selectPatient.emit(filtered[0])
+      this.input = ''
     }
     return filtered
   }
 
   checkSelection() {
     this.selectPatient.emit(this.input)
-  }
-
-  ngOnChanges() {
+    this.input = ''
   }
 
   newPatient() {

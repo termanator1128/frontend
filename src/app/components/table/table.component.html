@@ -1,5 +1,10 @@
-<p-table (onRowSelect)="onRowSelect($event)" [(selection)]="selectedRow" [columns]="cols" [paginator]="true"
-         [rows]="15" [value]="rows" selectionMode="single">
+<p-table (onRowSelect)="onRowSelect($event)"
+         [(selection)]="selectedRow"
+         [columns]="cols" [paginator]="true"
+         [responsive]="true"
+         [rows]="15"
+         [value]="rows"
+         selectionMode="single">
   <ng-template pTemplate="caption">
     {{tableTitle}}
   </ng-template>
@@ -29,6 +34,7 @@
   [new]="new"
   [cols]="cols"
   [display]="visible"
+  [isPatient]="false"
   [row]="selectedRow"
   [forbiddenNames]="patientNames$ | async"
   [headerTitle]="addRowModalTitle"

@@ -1,9 +1,10 @@
 <p-dialog
+  [responsive]="false"
   (onHide)="hide()"
   [(visible)]="display"
   [header]="headerTitle"
   [modal]="true"
-  [responsive]="true"
+  key="patient"
   showEffect="fade">
   <div *ngIf="row" class="ui-g ui-fluid">
     <form [formGroup]="form">
@@ -25,5 +26,17 @@
       [form]="form"
       [new]="new"
     ></app-save-controller>
+  </p-footer>
+</p-dialog>
+<p-dialog header="Are you sure?" [(visible)]="showConfirmDelete" [modal]="true" [responsive]="true"
+          [style]="{width: '350px', minWidth: '200px'}" [minY]="70"
+          [maximizable]="false" [baseZIndex]="10000">
+  <p>This action <b>cannot</b> be undone. This will permanently delete patient <b>'{{row?.name}}'</b> and all
+    information pertaining to them</p>
+  <p-footer>
+    <div class="form-controls">
+      <button type="button" pButton (click)="showConfirmDelete=false" label="Cancel"></button>
+      <button type="button" pButton (click)="confirmedDelete()" label="Delete" class="ui-button-danger"></button>
+    </div>
   </p-footer>
 </p-dialog>

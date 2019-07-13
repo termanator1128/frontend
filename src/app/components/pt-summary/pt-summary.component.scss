@@ -9,13 +9,18 @@
 }
 
 .pt-sum-info {
-  list-style: none
+  list-style: none;
+  padding-left: 0px;
 }
 
 .pt-info-and-edit {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   width: 100%;
+}
+
+.pt-info-and-edit h3 {
+  margin-bottom: 0px;
 }
 
 .form-controls {
@@ -26,4 +31,13 @@
 
 .sum-and-edit {
 
+}
+
+.info-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.info-title h2 {
+  margin-top: 0;
 }

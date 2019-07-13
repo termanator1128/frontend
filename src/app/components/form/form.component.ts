@@ -11,6 +11,7 @@ export class FormComponent implements OnInit, OnChanges {
   @Input() row: any
   @Input() display: boolean
   @Input() new: boolean
+  @Input() isPatient: boolean
   @Input() cols
   @Input() headerTitle
   @Input() forbiddenNames: Array<string>
@@ -19,6 +20,7 @@ export class FormComponent implements OnInit, OnChanges {
   @Output() deleteRow: EventEmitter<any> = new EventEmitter()
   @Output() closeDialog: EventEmitter<any> = new EventEmitter()
   form: FormGroup
+  showConfirmDelete = false
 
   constructor(private formBuilder: FormBuilder) {
   }
@@ -76,10 +78,18 @@ export class FormComponent implements OnInit, OnChanges {
     this.editRow.emit(updateRow)
   }
 
-  delete() {
+  confirmedDelete() {
     const deleteRow = this.collectFormData()
     deleteRow._id = this.row._id
     this.deleteRow.emit(deleteRow)
+  }
+
+  delete() {
+    if (this.isPatient) {
+      this.showConfirmDelete = true
+    } else {
+      this.confirmedDelete()
+    }
   }
 
   hide() {
@@ -93,7 +103,7 @@ export class FormComponent implements OnInit, OnChanges {
 
   validateDate(control: AbstractControl): { validateDate: true } | null {
     const dateRegex = /^(0?[1-9]|1[0-2])\/(0?[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/
-    return !dateRegex.test(control.value) ? {validateDate: true} : null
+    return (!dateRegex.test(control.value) && control.value) ? {validateDate: true} : null
   }
 
 }

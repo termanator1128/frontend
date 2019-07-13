@@ -1,6 +1,8 @@
 <p-card>
   <h2 class="first">Patient Details</h2>
-  <p-tabView (onChange)="handleChange($event)" class="no-pad">
+  <p-tabView
+    (onChange)="handleChange($event)"
+    class="no-pad">
     <p-tabPanel class="no-pad" header="Rx" leftIcon="pi pi-list">
       <app-table
         (addRow)="addRx($event)"
