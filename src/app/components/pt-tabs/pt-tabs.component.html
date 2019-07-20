@@ -3,12 +3,11 @@
   <p-tabView
     (onChange)="handleChange($event)"
     class="no-pad">
-    <p-tabPanel class="no-pad" header="Rx" leftIcon="pi pi-list">
+    <p-tabPanel class="no-pad" header="Prescriptions" leftIcon="pi pi-list">
       <app-table
         (addRow)="addRx($event)"
         (editRow)="editRx($event)"
         (deleteRow)="deleteRx($event)"
-        *ngIf="activeTab === 0"
         [cols]="columns.rx"
         [rows]="patient.scripts"
         addRowButtonLabel="Prescribe"
@@ -21,7 +20,6 @@
         (addRow)="addHistory($event)"
         (deleteRow)="deleteHistory($event)"
         (editRow)="editHistory($event)"
-        *ngIf="activeTab === 1"
         [cols]="columns.history"
         [rows]="patient.history"
         addRowButtonLabel="Add Diagnosis"
@@ -34,7 +32,6 @@
         (addRow)="addAllergy($event)"
         (deleteRow)="deleteAllergy($event)"
         (editRow)="editAllergy($event)"
-        *ngIf="activeTab === 2"
         [cols]="columns.allergy"
         [rows]="patient.allergies"
         addRowButtonLabel="Add Allergy"
@@ -42,9 +39,10 @@
         addRowModalTitle="Edit Allergy"
       ></app-table>
     </p-tabPanel>
+    <p-tabPanel header="PCRs" leftIcon="pi pi-calendar-plus">
+    </p-tabPanel>
     <p-tabPanel header="Other Notes" leftIcon="pi pi-pencil">
       <app-pt-notes
-        *ngIf="activeTab === 3"
         (notesEdit)="changeNotes($event)"
         [notes]="patient.notes"
       ></app-pt-notes>

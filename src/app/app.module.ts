@@ -10,6 +10,7 @@ import {
   AutoCompleteModule,
   CalendarModule,
   CardModule,
+  DropdownModule,
   EditorModule,
   FieldsetModule,
   InputMaskModule,
@@ -46,9 +47,12 @@ import {JWT_OPTIONS, JwtHelperService} from '@auth0/angular-jwt'
 import {CookieService} from 'ngx-cookie-service'
 import {ToastModule} from 'primeng/toast'
 import {JwtInterceptor} from './services/jwt.interceptor'
+import {CreateAccountComponent} from './components/create-account/create-account.component'
+import {ProfilePreviewComponent} from './components/profile-preview/profile-preview.component'
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
+  {path: 'create', component: CreateAccountComponent},
   {
     path: '**',
     component: MainComponent,
@@ -71,6 +75,8 @@ const routes: Routes = [
     SaveControllerComponent,
     LoginComponent,
     MainComponent,
+    CreateAccountComponent,
+    ProfilePreviewComponent,
   ],
   imports: [
     BrowserModule,
@@ -101,6 +107,7 @@ const routes: Routes = [
     MessagesModule,
     MessageModule,
     ToastModule,
+    DropdownModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},

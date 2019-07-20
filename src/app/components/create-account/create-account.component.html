@@ -9,7 +9,7 @@
   </div>
   <div class="content">
     <form [formGroup]="form" (ngSubmit)="submit()">
-      <h2>Login</h2>
+      <h2>Create an Account</h2>
       <span class="ui-float-label">
         <input formControlName="username" id="float-input" type="text" size="30" pInputText>
         <label for="float-input">Username</label>
@@ -18,11 +18,18 @@
         <input formControlName="password" id="float-password" [feedback]="false" pPassword size="30" type="password"/>
         <label for="float-input">Password</label>
       </span>
+      <span class="ui-float-label">
+        <input formControlName="verify" id="float-verify" [feedback]="false" pPassword size="30" type="password"/>
+        <label for="float-input">Verify Password</label>
+      </span>
+      <span class="ui-float-label">
+        <input formControlName="access" id="float-access" type="text" size="30" pInputText>
+        <label for="float-input">Access Code</label>
+      </span>
       <div class="submit-btn-div">
         <button class="submit-btn" label="Submit" pButton type="submit"
                 [disabled]="!(form.dirty && form.valid)"></button>
       </div>
-      <p class="sign-up">Don't have an account? <a routerLink="/create">Sign Up</a></p>
     </form>
   </div>
 </div>

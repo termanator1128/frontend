@@ -1,9 +1,12 @@
+import {SelectItem} from 'primeng/api'
+
 export interface PatientControl {
   controlName: string
   required: boolean
   label: string
   type: string
-  hint: string
+  hint?: string
+  choices?: SelectItem[]
 }
 
 export interface PatientColumns {

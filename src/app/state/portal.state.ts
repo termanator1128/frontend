@@ -2,7 +2,7 @@ import {Action, Selector, State, StateContext} from '@ngxs/store'
 import {AddRx, RemoveRx, UpdateRx} from './actions/rx.action'
 import {AddPatient, GetPatients, RemovePatient, UpdatePatient} from './actions/patient.action'
 import {Patient} from '../models/Patient'
-import {SetSelectedPatient, SetState} from './actions/state.action'
+import {SetLoggedInUser, SetSelectedPatient, SetState} from './actions/state.action'
 import {PatientService} from '../services/patient.service'
 import {PatientColumns} from '../models/Column'
 import {RxService} from '../services/rx.service'
@@ -23,22 +23,51 @@ const columns: PatientColumns = {
   history: [
     {controlName: 'date', type: 'date', label: 'Onset', required: true, hint: 'mm/dd/yyyy'},
     {controlName: 'diagnosis', type: 'text', label: 'Diagnosis', required: true, hint: 'Concussion'},
+    {controlName: 'treatment', type: 'text', label: 'Treatment', required: true, hint: 'Surgery'},
     {controlName: 'diagnoser', type: 'text', label: 'Diagnosed by', required: true, hint: 'Name, rank'}
   ],
   allergy: [
     {controlName: 'allergy', type: 'text', label: 'Allergy', required: true, hint: 'Penicillin'},
     {controlName: 'reaction', type: 'text', label: 'Reaction', required: true, hint: 'Hives'},
-    {controlName: 'severity', type: 'text', label: 'Severity', required: true, hint: 'Mild/Moderate/Severe'}
+    {
+      controlName: 'severity', type: 'radio', label: 'Severity', required: true, choices: [
+        {label: 'Mild', value: 'mild'},
+        {label: 'Moderate', value: 'moderate'},
+        {label: 'Severe', value: 'severe'},
+      ]
+    }
   ],
   details: [
     {controlName: 'name', type: 'text', label: 'Name', required: true, hint: 'Full name'},
     {controlName: 'age', type: 'number', label: 'Age', required: true, hint: 'Age in years'},
-    {controlName: 'sex', type: 'sex', label: 'Sex', required: true, hint: 'n/a'},
+    {
+      controlName: 'sex', type: 'radio', label: 'Sex', required: true, choices: [
+        {label: 'Male', value: 'male'},
+        {label: 'Female', value: 'female'}
+      ]
+    },
+    {
+      controlName: 'bloodType',
+      type: 'drop',
+      label: 'Blood Type',
+      required: true,
+      choices: [
+        {label: 'Unknown', value: 'unknown'},
+        {label: 'A+', value: 'a+'},
+        {label: 'A-', value: 'a-'},
+        {label: 'B+', value: 'b+'},
+        {label: 'B-', value: 'b-'},
+        {label: 'AB+', value: 'ab+'},
+        {label: 'AB-', value: 'ab-'},
+        {label: 'O+', value: 'o+'},
+        {label: 'O-', value: 'o-'}
+      ]
+    },
     {controlName: 'pronouns', type: 'text', label: 'Pronouns', required: false, hint: 'She/her'},
-    {controlName: 'dob', type: 'date', label: 'DOB', required: true, hint: 'mm/dd/yyyy'},
-    {controlName: 'address', type: 'text', label: 'Address', required: false, hint: '45 West Broadway'}
+    {controlName: 'race', type: 'text', label: 'Race', required: false, hint: 'Hispanic'}
   ]
 }
+
 
 export class PortalStateModel {
   patients: Patient[]
@@ -46,6 +75,7 @@ export class PortalStateModel {
   state: 'landing' | 'new' | 'patient'
   selectedPatient: Patient
   patientNames: Array<string>
+  user: string
 }
 
 @State<PortalStateModel>({
@@ -55,7 +85,8 @@ export class PortalStateModel {
     columns,
     state: 'landing',
     selectedPatient: undefined,
-    patientNames: []
+    patientNames: [],
+    user: undefined
   }
 })
 
@@ -94,6 +125,11 @@ export class PortalState {
     return state.patientNames
   }
 
+  @Selector()
+  static getLoggedInUser(state: PortalStateModel) {
+    return state.user
+  }
+
   @Action(GetPatients)
   getPatients(ctx: StateContext<PortalStateModel>, {}: SetState) {
     this.patientService.getPatients().subscribe((resp) => {
@@ -123,6 +159,13 @@ export class PortalState {
     ctx.patchState({
       state: 'patient',
       selectedPatient: payload
+    })
+  }
+
+  @Action(SetLoggedInUser)
+  setLoggedInUser(ctx: StateContext<PortalStateModel>, {payload}: SetLoggedInUser) {
+    ctx.patchState({
+      user: payload
     })
   }
 

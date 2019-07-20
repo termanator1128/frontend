@@ -13,3 +13,10 @@ export class SetSelectedPatient {
   constructor(public payload: Patient) {
   }
 }
+
+export class SetLoggedInUser {
+  static readonly type = '[LOGIN] Set'
+
+  constructor(public payload: string) {
+  }
+}

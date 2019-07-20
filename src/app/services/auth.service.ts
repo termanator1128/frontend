@@ -6,6 +6,9 @@ import {Observable} from 'rxjs'
 import {Router} from '@angular/router'
 
 const authUrl = 'https://auth.aleinin.com'
+// TODO
+const clientID = 'aleinin'
+const clientSecret = 'WinnerPOV'
 
 @Injectable()
 export class AuthService {
@@ -25,12 +28,14 @@ export class AuthService {
   }
 
   public authenticate(username: string, password: string): Observable<any> {
+    let headers = new HttpHeaders()
+    headers = headers.append('Content-Type', 'application/x-www-form-urlencoded')
+    headers = headers.append('Authorization', 'Basic ' + btoa(`${clientID}:${clientSecret}`))
     const body = new HttpParams()
       .set('username', username)
       .set('password', password)
     return this.http.post(`${authUrl}/token`, body.toString(), {
-      headers: new HttpHeaders()
-        .set('Content-Type', 'application/x-www-form-urlencoded')
+      headers
     })
   }
 
@@ -42,5 +47,18 @@ export class AuthService {
   public deleteToken(): void {
     this.cookie.delete('token')
     this.router.navigate(['login'])
+  }
+
+  public createNewAccount(username: string, password: string, access: string): Observable<any> {
+    let headers = new HttpHeaders()
+    headers = headers.append('Content-Type', 'application/x-www-form-urlencoded')
+    headers = headers.append('Authorization', 'Basic ' + btoa(`${clientID}:${clientSecret}`))
+    const body = new HttpParams()
+      .set('username', username)
+      .set('password', password)
+      .set('accessCode', access)
+    return this.http.post(`${authUrl}/user`, body.toString(), {
+      headers
+    })
   }
 }

@@ -11,3 +11,4 @@ export interface Patient {
   allergies: Allergy[]
   notes: string
 }
+

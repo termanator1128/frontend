@@ -1,0 +1,5 @@
+<a *ngIf="user$ | async as user" href="">
+  <div class="profile-chip">
+    <span>{{user[0].toUpperCase()}}</span>
+  </div>
+</a>

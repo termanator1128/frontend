@@ -1,5 +1,6 @@
 <div [ngSwitch]="row.type">
   <form [formGroup]="form">
+    <!--Date-->
     <div *ngSwitchCase="'date'" class="ui-g-12">
       <p *ngIf="form.get(row.controlName).errors?.validateDate" class="error">mm/dd/yyyy</p>
       <div class="ui-g-4">
@@ -9,6 +10,7 @@
         <input [formControlName]="row.controlName" [id]="row.controlName" [placeholder]="row.hint" pInputText/>
       </div>
     </div>
+    <!--Number-->
     <div *ngSwitchCase="'number'" class="ui-g-12">
       <div class="ui-g-4">
         <p>{{row.label}}&nbsp;<span *ngIf="row.required" class="required">*</span></p>
@@ -18,22 +20,38 @@
                type="text">
       </div>
     </div>
-    <div *ngSwitchCase="'sex'" class="ui-g-12">
+    <!--Sex-->
+    <div *ngSwitchCase="'radio'" class="ui-g-12">
       <div class="ui-g-4">
         <p>{{row.label}}&nbsp;<span *ngIf="row.required" class="required">*</span></p>
       </div>
       <div class="ui-g">
-        <div class="ui-g-12">
-          <p-radioButton [formControlName]="row.controlName" inputId="opt1" label="Male" name="group1"
-                         value="Male"></p-radioButton>
-        </div>
-        <div class="ui-g-12">
-          <p-radioButton [formControlName]="row.controlName" inputId="opt2" label="Female" name="group1"
-                         value="Female"></p-radioButton>
+        <div *ngFor="let choice of row.choices" class="ui-g-12">
+          <p-radioButton
+            [formControlName]="row.controlName"
+            [inputId]="choice.value"
+            [label]="choice.label"
+            [value]="choice.value"
+            name="group1"
+          ></p-radioButton>
         </div>
       </div>
     </div>
-
+    <!--Drop-->
+    <div *ngSwitchCase="'drop'" class="ui-g-12">
+      <div class="ui-g-4">
+        <p>{{row.label}}</p>
+      </div>
+      <div class="ui-g">
+        <div class="ui-g-12">
+          <p-dropdown
+            [formControlName]="row.controlName"
+            [options]="row.choices"
+          ></p-dropdown>
+        </div>
+      </div>
+    </div>
+    <!--Text-->
     <div *ngSwitchDefault class="ui-g-12">
       <p *ngIf="row.controlName ==='name' && form.get(row.controlName).errors?.noForbiddenNames" class="error">That
         patient already exists</p>
