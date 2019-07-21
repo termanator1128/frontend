@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core'
 import {Patient} from '../../models/Patient'
+import {Router} from '@angular/router'
 
 @Component({
   selector: 'app-main-search',
@@ -10,10 +11,9 @@ export class MainSearchComponent {
   @Input() patients: Patient[]
   input: any
   filteredPatients: Patient[]
-  @Output() selectPatient: EventEmitter<any> = new EventEmitter()
   @Output() createNew: EventEmitter<any> = new EventEmitter()
 
-  constructor() {
+  constructor(private router: Router) {
   }
 
   filterPatientSingle(event) {
@@ -29,14 +29,14 @@ export class MainSearchComponent {
       }
     }
     if (filtered.length === 1 && filtered[0].info.name === this.input) {
-      this.selectPatient.emit(filtered[0])
+      this.router.navigate([`patient/${filtered[0]._id}`])
       this.input = ''
     }
     return filtered
   }
 
   checkSelection() {
-    this.selectPatient.emit(this.input)
+    this.router.navigate([`patient/${this.input._id}`])
     this.input = ''
   }
 

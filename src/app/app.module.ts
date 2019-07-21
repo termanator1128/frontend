@@ -49,14 +49,41 @@ import {ToastModule} from 'primeng/toast'
 import {JwtInterceptor} from './services/jwt.interceptor'
 import {CreateAccountComponent} from './components/create-account/create-account.component'
 import {ProfilePreviewComponent} from './components/profile-preview/profile-preview.component'
+import {ProfileComponent} from './components/profile/profile.component'
+import {AlternateComponent} from './components/alternate/alternate.component'
+import {LogGuardService} from './services/log-guard.service'
 
 const routes: Routes = [
-  {path: 'login', component: LoginComponent},
-  {path: 'create', component: CreateAccountComponent},
   {
-    path: '**',
+    path: '',
     component: MainComponent,
     canActivate: [AuthGuardService]
+  },
+  {
+    path: 'patient/:patient',
+    component: MainComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'profile',
+    component: AlternateComponent,
+    children: [
+      {
+        path: '',
+        component: ProfileComponent,
+        canActivate: [AuthGuardService]
+      },
+      {
+        path: 'login',
+        component: LoginComponent,
+        canActivate: [LogGuardService]
+      },
+      {
+        path: 'create',
+        component: CreateAccountComponent,
+        canActivate: [LogGuardService]
+      }
+    ]
   }
 ]
 
@@ -77,6 +104,8 @@ const routes: Routes = [
     MainComponent,
     CreateAccountComponent,
     ProfilePreviewComponent,
+    ProfileComponent,
+    AlternateComponent,
   ],
   imports: [
     BrowserModule,
@@ -112,6 +141,7 @@ const routes: Routes = [
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     AuthGuardService,
+    LogGuardService,
     AuthService,
     {provide: JWT_OPTIONS, useValue: JWT_OPTIONS},
     JwtHelperService,

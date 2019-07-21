@@ -2,8 +2,6 @@ import {Component, OnInit} from '@angular/core'
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms'
 import {AuthService} from '../../services/auth.service'
 import {MessageService} from 'primeng/api'
-import {Store} from '@ngxs/store'
-import {SetLoggedInUser} from '../../state/actions/state.action'
 
 @Component({
   selector: 'app-login',
@@ -16,8 +14,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private auth: AuthService,
-              private messageService: MessageService,
-              private store: Store) {
+              private messageService: MessageService) {
   }
 
   ngOnInit() {
@@ -48,7 +45,6 @@ export class LoginComponent implements OnInit {
   checkAuth(resp) {
     if (resp.token) {
       this.auth.saveToken(resp.token)
-      this.store.dispatch(new SetLoggedInUser(this.form.controls.username.value))
     } else {
       this.failedAuth(resp)
     }

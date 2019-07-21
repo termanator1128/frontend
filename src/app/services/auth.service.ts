@@ -4,6 +4,8 @@ import {CookieService} from 'ngx-cookie-service'
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http'
 import {Observable} from 'rxjs'
 import {Router} from '@angular/router'
+import {Store} from '@ngxs/store'
+import {SetLoggedInUser} from '../state/actions/state.action'
 
 const authUrl = 'https://auth.aleinin.com'
 // TODO
@@ -15,7 +17,8 @@ export class AuthService {
   constructor(public jwtHelper: JwtHelperService,
               private cookie: CookieService,
               private http: HttpClient,
-              public router: Router) {
+              public router: Router,
+              private store: Store) {
   }
 
   public isAuthenticated(): boolean {
@@ -23,8 +26,12 @@ export class AuthService {
     const expired = this.jwtHelper.isTokenExpired(token)
     if (expired) {
       this.deleteToken()
+      return false
+    } else {
+      const username = this.jwtHelper.decodeToken(token).username
+      this.store.dispatch(new SetLoggedInUser(username))
+      return !expired
     }
-    return !expired
   }
 
   public authenticate(username: string, password: string): Observable<any> {
@@ -45,8 +52,7 @@ export class AuthService {
   }
 
   public deleteToken(): void {
-    this.cookie.delete('token')
-    this.router.navigate(['login'])
+    this.cookie.delete('token', '/', '/')
   }
 
   public createNewAccount(username: string, password: string, access: string): Observable<any> {

@@ -31,9 +31,9 @@ const columns: PatientColumns = {
     {controlName: 'reaction', type: 'text', label: 'Reaction', required: true, hint: 'Hives'},
     {
       controlName: 'severity', type: 'radio', label: 'Severity', required: true, choices: [
-        {label: 'Mild', value: 'mild'},
-        {label: 'Moderate', value: 'moderate'},
-        {label: 'Severe', value: 'severe'},
+        {label: 'Mild', value: 'Mild'},
+        {label: 'Moderate', value: 'Moderate'},
+        {label: 'Severe', value: 'Severe'},
       ]
     }
   ],
@@ -42,8 +42,8 @@ const columns: PatientColumns = {
     {controlName: 'age', type: 'number', label: 'Age', required: true, hint: 'Age in years'},
     {
       controlName: 'sex', type: 'radio', label: 'Sex', required: true, choices: [
-        {label: 'Male', value: 'male'},
-        {label: 'Female', value: 'female'}
+        {label: 'Male', value: 'Male'},
+        {label: 'Female', value: 'Female'}
       ]
     },
     {
@@ -53,14 +53,14 @@ const columns: PatientColumns = {
       required: true,
       choices: [
         {label: 'Unknown', value: 'unknown'},
-        {label: 'A+', value: 'a+'},
-        {label: 'A-', value: 'a-'},
-        {label: 'B+', value: 'b+'},
-        {label: 'B-', value: 'b-'},
-        {label: 'AB+', value: 'ab+'},
-        {label: 'AB-', value: 'ab-'},
-        {label: 'O+', value: 'o+'},
-        {label: 'O-', value: 'o-'}
+        {label: 'A+', value: 'A+'},
+        {label: 'A-', value: 'A-'},
+        {label: 'B+', value: 'B+'},
+        {label: 'B-', value: 'B-'},
+        {label: 'AB+', value: 'AB+'},
+        {label: 'AB-', value: 'AB-'},
+        {label: 'O+', value: 'O+'},
+        {label: 'O-', value: 'O-'}
       ]
     },
     {controlName: 'pronouns', type: 'text', label: 'Pronouns', required: false, hint: 'She/her'},
@@ -81,7 +81,7 @@ export class PortalStateModel {
 @State<PortalStateModel>({
   name: 'patients',
   defaults: {
-    patients: [],
+    patients: undefined,
     columns,
     state: 'landing',
     selectedPatient: undefined,
@@ -156,6 +156,7 @@ export class PortalState {
 
   @Action(SetSelectedPatient)
   setSelectedPatient(ctx: StateContext<PortalStateModel>, {payload}: SetSelectedPatient) {
+    console.log('set to patient')
     ctx.patchState({
       state: 'patient',
       selectedPatient: payload

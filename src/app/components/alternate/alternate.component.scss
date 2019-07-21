@@ -1,0 +1,37 @@
+.all-but-footer {
+  min-height: calc(100vh - 50px);
+}
+
+.source-code {
+  margin-top: 15px;
+}
+
+.footer {
+  color: white;
+  background-image: linear-gradient(#1368d8 1%, #0f51a9 100%);
+  display: flex;
+  justify-content: center;
+  height: 50px;
+}
+
+.banner {
+  background-image: linear-gradient(#1368d8 1%, #0f51a9 100%);
+  display: flex;
+  justify-content: center;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  color: white;
+  font-family: Arial
+}
+
+.search {
+  border-radius: 15px;
+  padding: 10px;
+}
+
+.source-code {
+  color: white;
+}

@@ -1,4 +1,4 @@
-<a *ngIf="user$ | async as user" href="">
+<a *ngIf="user$ | async as user" routerLink="/profile">
   <div class="profile-chip">
     <span>{{user[0].toUpperCase()}}</span>
   </div>
