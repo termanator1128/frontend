@@ -9,9 +9,11 @@ export class AuthGuardService implements CanActivate {
 
   canActivate(): boolean {
     if (!this.auth.isAuthenticated()) {
+      console.log('auth not logged in, moving to login')
       this.router.navigate(['profile/login'])
       return false
     }
+    console.log('auth logged in, allowing access')
     return true
   }
 }

@@ -1,0 +1,73 @@
+<div class="component-container">
+  <form [formGroup]="pcr">
+    <span class="form-title impressions dark"><i><b>Individual Patient Care Report</b></i></span>
+    <div class="form-content">
+      <div class="technicians form">
+        <app-technicians [form]="pcr"></app-technicians>
+      </div>
+      <div class="shift-date form">
+        <app-shift-complaint [form]="pcr"></app-shift-complaint>
+      </div>
+      <div class="outcome form">
+        <app-outcome [form]="pcr"></app-outcome>
+      </div>
+      <div class="medical form">
+        <app-check-form
+          [form]="pcr"
+          [selections]="medicalArr"
+          controlName="medical"
+          group="group4"
+          title="Medical Issues"
+        ></app-check-form>
+      </div>
+      <div class="medical form">
+        <app-check-form
+          [form]="pcr"
+          [selections]="traumaArr"
+          controlName="trauma"
+          group="group5"
+          title="Trauma Location"
+        ></app-check-form>
+      </div>
+      <div class="medical form">
+        <app-check-form
+          [form]="pcr"
+          [selections]="mechArr"
+          controlName="mechanism"
+          group="group6"
+          title="Mechanism of Injury"
+        ></app-check-form>
+      </div>
+    </div>
+    <div class="mini-tables">
+      <div class="vitals form">
+        <span class="form-title dark">Vitals Recorded</span>
+        <app-table
+          (addRow)="addVital($event)"
+          (deleteRow)="deleteVital($event)"
+          (editRow)="editVital($event)"
+          [cols]="vitalCols"
+          [rows]="[]"
+          addRowButtonLabel="Add Vitals"
+          addRowModalTitle="Vitals"
+        ></app-table>
+      </div>
+      <div class="medications form">
+        <span class="form-title dark">Drugs Administered</span>
+        <app-table
+          (addRow)="addDrug($event)"
+          (deleteRow)="deleteDrug($event)"
+          (editRow)="editDrug($event)"
+          [cols]="drugCols"
+          [rows]="[]"
+          addRowButtonLabel="Add Drug"
+          addRowModalTitle="Drugs"
+        ></app-table>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="save-controller">
+  <button (click)="save()" [disabled]="!pcr.valid" class="save" label="Save" pButton type="button"></button>
+  <button (click)="cancel()" class="ui-button-secondary cancel" label="Cancel" pButton type="button"></button>
+</div>

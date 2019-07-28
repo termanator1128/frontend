@@ -10,6 +10,8 @@ import {
   AutoCompleteModule,
   CalendarModule,
   CardModule,
+  CheckboxModule,
+  DialogService,
   DropdownModule,
   EditorModule,
   FieldsetModule,
@@ -52,6 +54,13 @@ import {ProfilePreviewComponent} from './components/profile-preview/profile-prev
 import {ProfileComponent} from './components/profile/profile.component'
 import {AlternateComponent} from './components/alternate/alternate.component'
 import {LogGuardService} from './services/log-guard.service'
+import {PcrFormComponent} from './components/pcr-form/pcr-form.component'
+import {PcrListComponent} from './components/pcr-list/pcr-list.component'
+import {DynamicDialogModule} from 'primeng/dynamicdialog'
+import {TechniciansComponent} from './components/pcr-form/technicians/technicians.component'
+import {OutcomeComponent} from './components/pcr-form/outcome/outcome.component'
+import {ShiftComplaintComponent} from './components/pcr-form/shift-complaint/shift-complaint.component'
+import {CheckFormComponent} from './components/pcr-form/check-form/check-form.component'
 
 const routes: Routes = [
   {
@@ -106,6 +115,12 @@ const routes: Routes = [
     ProfilePreviewComponent,
     ProfileComponent,
     AlternateComponent,
+    PcrFormComponent,
+    PcrListComponent,
+    TechniciansComponent,
+    OutcomeComponent,
+    ShiftComplaintComponent,
+    CheckFormComponent
   ],
   imports: [
     BrowserModule,
@@ -136,7 +151,9 @@ const routes: Routes = [
     MessagesModule,
     MessageModule,
     ToastModule,
-    DropdownModule
+    DropdownModule,
+    CheckboxModule,
+    DynamicDialogModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
@@ -146,6 +163,10 @@ const routes: Routes = [
     {provide: JWT_OPTIONS, useValue: JWT_OPTIONS},
     JwtHelperService,
     CookieService,
+    DialogService
+  ],
+  entryComponents: [
+    PcrFormComponent
   ],
   bootstrap: [AppComponent],
   exports: [RouterModule]

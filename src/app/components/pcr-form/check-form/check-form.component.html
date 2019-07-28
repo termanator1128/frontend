@@ -1,0 +1,17 @@
+<form [formGroup]="form">
+  <div class="title-input">
+    <span class="form-title dark">{{title}}</span>
+    <div class="double-check-set">
+      <div *ngFor="let choice of selections">
+        <p-checkbox
+          [formControl]="form.controls[controlName]"
+          [inputId]="choice.inputID"
+          [name]="group"
+          [value]="choice.value"
+          class="double-check"
+        ></p-checkbox>
+        <span class="double-check-label">{{choice.value}}</span>
+      </div>
+    </div>
+  </div>
+</form>

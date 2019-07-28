@@ -1,0 +1,38 @@
+<form [formGroup]="form">
+  <div class="title-input">
+    <span class="form-title dark">Call Outcome</span>
+    <div>
+      <div class="radio">
+        <p-radioButton formControlName="outcome" inputId="tr" label="Transport Routine" name="group3"
+                       value="Transport Routine"></p-radioButton>
+      </div>
+      <div class="radio">
+        <p-radioButton formControlName="outcome" inputId="te" label="Transport Emergency"
+                       name="group3"
+                       value="Transport Emergency"></p-radioButton>
+      </div>
+      <div class="radio">
+        <p-radioButton formControlName="outcome" inputId="rt" label="Refused Treatment" name="group3"
+                       value="Refused Treatment"></p-radioButton>
+      </div>
+      <div class="radio">
+        <p-radioButton formControlName="outcome" inputId="tr" label="Treated - Released"
+                       name="group3"
+                       value="Treated - Released"></p-radioButton>
+      </div>
+      <div class="radio">
+        <p-radioButton formControlName="outcome" inputId="tu" label="Treated - Refused Transport"
+                       name="group3"
+                       value="Treated - Refused Transport"></p-radioButton>
+      </div>
+      <div class="radio">
+        <p-radioButton formControlName="outcome" inputId="trt" label="D.O.A." name="group3"
+                       value="D.O.A."></p-radioButton>
+      </div>
+      <div class="radio">
+        <p-radioButton formControlName="outcome" inputId="trt" label="False Call" name="group3"
+                       value="False Call"></p-radioButton>
+      </div>
+    </div>
+  </div>
+</form>

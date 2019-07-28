@@ -16,3 +16,10 @@ html {
   padding: 0;
 }
 
+.ui-corner-top {
+  @media screen and (max-width: 750px) {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+}

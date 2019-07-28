@@ -1,0 +1,153 @@
+.form {
+  border: 1px solid black
+}
+
+.block-title {
+}
+
+.name-and-id {
+  display: flex;
+  flex-direction: row;
+}
+
+.component-container {
+  margin-left: auto;
+  margin-right: auto;
+  width: auto;
+  padding-top: 20px;
+}
+
+.main-title {
+  display: flex;
+  justify-content: center;
+}
+
+.form-content {
+  display: grid;
+  @media screen and (max-width: 724px) {
+    display: flex;
+    flex-direction: column;
+  }
+  @media screen and (min-width: 725px) and (max-width: 1023px) {
+    grid-template-columns: auto auto;
+  }
+  @media screen and (min-width: 1024px) {
+    display: grid;
+    grid-template-columns: auto auto auto;
+  }
+}
+
+.form-title {
+  color: white;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+}
+
+.title-input {
+  display: flex;
+  flex-direction: column
+}
+
+.race-sex {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.dark {
+  background-color: #007AD9;
+  border-bottom: 1px solid black
+}
+
+.chief-complaint {
+  width: 100%;
+}
+
+.side-title {
+  display: flex;
+  flex-direction: row
+}
+
+#chief {
+  width: 100%;
+}
+
+.nowrap {
+  white-space: nowrap;
+  padding-top: 6px;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.double-check {
+  padding: 5px;
+}
+
+.double-check-label {
+  padding-right: 5px;
+}
+
+.option {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.impressions {
+  font-size: 1.2em;
+}
+
+.cancel {
+  margin-right: 5px;
+}
+
+.save-controller {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.double-check-set {
+  display: grid;
+
+  @media screen and (max-width: 1199px) {
+    grid-template-columns: auto;
+  }
+  @media screen and (min-width: 1200px) {
+    grid-template-columns: auto auto;
+  }
+  padding: 10px;
+}
+
+.double-check-mech {
+  display: grid;
+
+  padding: 7px;
+  @media screen and (max-width: 1199px) {
+    grid-template-columns: auto;
+  }
+  @media screen and (min-width: 1200px) and (max-width: 1399px) {
+    grid-template-columns: auto auto;
+  }
+  @media screen and (min-width: 1400px) {
+    grid-template-columns: auto auto auto;
+  }
+}
+
+.mini-tables {
+  display: grid;
+  @media screen and (max-width: 999px) {
+    grid-template-columns: auto;
+  }
+  @media screen and (min-width: 1000px) {
+    grid-template-columns: auto auto;
+  }
+}
+
+.spacer {
+  color: #007AD9;
+  width: 50px;
+}

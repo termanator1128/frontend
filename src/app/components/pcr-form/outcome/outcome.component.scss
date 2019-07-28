@@ -1,0 +1,20 @@
+.form-title {
+  color: white;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+}
+
+.dark {
+  background-color: #007AD9;
+  border-bottom: 1px solid black
+}
+
+.radio {
+  padding: 5px;
+}
+
+.title-input {
+  display: flex;
+  flex-direction: column
+}

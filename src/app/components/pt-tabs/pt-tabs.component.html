@@ -1,9 +1,12 @@
 <p-card>
   <h2 class="first">Patient Details</h2>
   <p-tabView
-    (onChange)="handleChange($event)"
-    class="no-pad">
-    <p-tabPanel class="no-pad" header="Prescriptions" leftIcon="pi pi-list">
+    (onChange)="handleChange($event)">
+    <p-tabPanel
+      class="no-pad"
+      header="Prescriptions"
+      leftIcon="pi pi-list"
+    >
       <app-table
         (addRow)="addRx($event)"
         (editRow)="editRx($event)"
@@ -40,6 +43,8 @@
       ></app-table>
     </p-tabPanel>
     <p-tabPanel header="PCRs" leftIcon="pi pi-calendar-plus">
+      <app-pcr-list></app-pcr-list>
+
     </p-tabPanel>
     <p-tabPanel header="Other Notes" leftIcon="pi pi-pencil">
       <app-pt-notes

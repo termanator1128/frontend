@@ -1,0 +1,36 @@
+<p-table
+  *ngIf="!showPCR; else PCR"
+  [columns]="cols"
+  [paginator]="true"
+  [responsive]="true"
+  [rows]="15"
+  [value]="rows"
+>
+  <ng-template pTemplate="caption">
+    Patient Care Reports
+  </ng-template>
+  <ng-template let-columns pTemplate="header">
+    <tr>
+      <th pSortableColumn="created">
+        Date Completed
+        <p-sortIcon field="created"></p-sortIcon>
+      </th>
+      <th>
+        PCR
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template let-columns="columns" let-rowData pTemplate="body">
+  </ng-template>
+  <ng-template let-rowData pTemplate="summary">
+    <div style="text-align:left">
+      <button (click)="newPCR()" label="New PCR" pButton type="button"></button>
+    </div>
+  </ng-template>
+
+</p-table>
+<ng-template #PCR>
+  <app-pcr-form
+    (cancelEmitter)="closeNewPCR()"
+  ></app-pcr-form>
+</ng-template>

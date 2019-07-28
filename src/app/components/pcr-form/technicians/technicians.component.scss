@@ -1,0 +1,38 @@
+.technicians {
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  background-color: lightgray;
+  min-height: 100%;
+}
+
+.tech-input {
+
+}
+
+.name-and-id {
+  display: flex;
+  flex-direction: row;
+}
+
+.tech-title-input {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.form-title {
+  color: white;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+}
+
+.dark {
+  background-color: #007AD9;
+  border-bottom: 1px solid black
+}
+
+.form {
+  border-left: 1px solid black;
+}

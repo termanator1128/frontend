@@ -1,0 +1,40 @@
+.form-title {
+  color: white;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+}
+
+.dark {
+  background-color: #007AD9;
+  border-bottom: 1px solid black
+}
+
+.radio {
+  padding: 5px;
+}
+
+.title-input {
+  display: flex;
+  flex-direction: column
+}
+
+.double-check {
+  padding: 5px;
+}
+
+.double-check-label {
+  padding-right: 5px;
+}
+
+.double-check-set {
+  display: grid;
+
+  @media screen and (max-width: 1199px) {
+    grid-template-columns: auto;
+  }
+  @media screen and (min-width: 1200px) {
+    grid-template-columns: auto auto;
+  }
+  padding: 10px;
+}

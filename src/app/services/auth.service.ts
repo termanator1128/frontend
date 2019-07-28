@@ -23,7 +23,9 @@ export class AuthService {
 
   public isAuthenticated(): boolean {
     const token = this.cookie.get('token')
+    console.log(token)
     const expired = this.jwtHelper.isTokenExpired(token)
+    console.log(expired)
     if (expired) {
       this.deleteToken()
       return false
@@ -35,6 +37,7 @@ export class AuthService {
   }
 
   public authenticate(username: string, password: string): Observable<any> {
+    console.log('umm')
     let headers = new HttpHeaders()
     headers = headers.append('Content-Type', 'application/x-www-form-urlencoded')
     headers = headers.append('Authorization', 'Basic ' + btoa(`${clientID}:${clientSecret}`))
@@ -47,7 +50,8 @@ export class AuthService {
   }
 
   public saveToken(token: string) {
-    this.cookie.set('token', token)
+    console.log('saving a cookie?')
+    this.cookie.set('token', token, undefined, '/')
     this.router.navigate([''])
   }
 
